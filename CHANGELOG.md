@@ -6,6 +6,7 @@ Docs: https://docs.openclaw.ai
 
 ### Changes
 
+- CLI: add `pnpm claw:max-readiness` to run `openclaw doctor` and `openclaw skills check` for the default agent plus each configured agent (from the repo root).
 - Build: set `blockExoticSubdeps: false` in `pnpm-workspace.yaml` so Baileys (WhatsApp) can install transitive `@whiskeysockets/libsignal-node` git dependencies under pnpm v11 defaults.
 - Operator: add sequential validation runner, integration health scaffold, browser automation runbook, and `operator/reports` operational docs.
 - Plugins: add bundled `operator-stack` plugin plus repo `operator/` runbooks (host setup, multi-agent mapping, memory strategy, security tiers, wave roadmap) for enterprise operator consoles.

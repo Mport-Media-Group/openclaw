@@ -14,6 +14,7 @@ engineering philosophy, infrastructure preferences, and strategic hierarchy.
 
 - `import { getFounderContextSummary, loadFounderContextSync } from "./load-founder-context.mjs"`
 - Validation: `node operator/founder/founder-health.mjs`
+- Optional full OpenClaw CLI readiness from the repo root: `pnpm claw:max-readiness` (doctor plus per-agent `skills check`)
 
 ## OpenClaw agents (`operator-stack` plugin)
 

@@ -11,6 +11,8 @@ See [docs/HOST_SETUP.md](docs/HOST_SETUP.md) for machine prep, [docs/LOCAL_VERIF
 
 **Validation**: `node operator/scripts/run-e2e-validation.mjs` (writes `reports/validation-run.log` and `reports/last-validation.json`). Operator reports: [reports/FINAL_STATUS.md](reports/FINAL_STATUS.md) and siblings in `reports/`.
 
+**OpenClaw CLI readiness** (run from the parent OpenClaw git repo root): `pnpm claw:max-readiness` runs `openclaw doctor` and `openclaw skills check` for the default agent and each agent in `openclaw agents list --json`. Use `--skip-doctor` on the underlying script if you only need skills checks.
+
 **Scripts (operator-local ESM)**:
 
 - `node operator/browser-automation/runtime-check.mjs` — Playwright Chromium smoke + screenshot under `reports/` (gitignored).
