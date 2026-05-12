@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "providers": {
+    "ok": true,
+    "env": {
+      "OPENAI_API_KEY": "unset",
+      "ANTHROPIC_API_KEY": "unset",
+      "GOOGLE_API_KEY": "unset",
+      "GEMINI_API_KEY": "unset",
+      "HUGGINGFACE_HUB_TOKEN": "unset",
+      "HF_TOKEN": "unset",
+      "AWS_ACCESS_KEY_ID": "unset",
+      "AWS_SECRET_ACCESS_KEY": "unset",
+      "GITHUB_TOKEN": "unset",
+      "GH_TOKEN": "unset",
+      "GITLAB_TOKEN": "unset",
+      "ZOHO_REFRESH_TOKEN": "unset",
+      "CANVA_CLIENT_ID": "unset"
+    },
+    "ollama": {
+      "reachable": false,
+      "base": "http://127.0.0.1:11434"
+    }
+  },
+  "memory": {
+    "bytes": 0
+  },
+  "at": "2026-05-11T20:39:15.203Z"
+}

@@ -6,6 +6,9 @@ Docs: https://docs.openclaw.ai
 
 ### Changes
 
+- Build: set `blockExoticSubdeps: false` in `pnpm-workspace.yaml` so Baileys (WhatsApp) can install transitive `@whiskeysockets/libsignal-node` git dependencies under pnpm v11 defaults.
+- Operator: add sequential validation runner, integration health scaffold, browser automation runbook, and `operator/reports` operational docs.
+- Plugins: add bundled `operator-stack` plugin plus repo `operator/` runbooks (host setup, multi-agent mapping, memory strategy, security tiers, wave roadmap) for enterprise operator consoles.
 - Docs/subagents: document `agents.defaults.subagents.announceTimeoutMs` in the sub-agent and configuration references. (#75509) Thanks @akrimm702.
 - Cron: add direct `cron.get`, `openclaw cron get <id>`, and agent-tool `get` support for inspecting one stored cron job by id. (#75117) Thanks @samzong.
 - Agents/tools: add per-sender tool policies with canonical channel-scoped sender keys, so operators can restrict dangerous tools by requester identity across global, agent, group, core, bundled, and plugin tool surfaces. (#66933) Thanks @JerranC.

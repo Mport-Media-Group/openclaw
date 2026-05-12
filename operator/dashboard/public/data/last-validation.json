@@ -1,0 +1,58 @@
+{
+  "startedAt": "2026-05-11T20:38:25.733Z",
+  "steps": [
+    {
+      "name": "parse_operator_models_json",
+      "severity": "required",
+      "ok": true,
+      "detail": "local keys: 3"
+    },
+    {
+      "name": "parse_operator_registry_json",
+      "severity": "required",
+      "ok": true,
+      "detail": "9 agents"
+    },
+    {
+      "name": "pnpm_test_operator_stack",
+      "severity": "required",
+      "ok": true
+    },
+    {
+      "name": "node_version",
+      "severity": "advisory",
+      "ok": true,
+      "detail": "node 22.22.2 (openclaw doctor requires >=22.16.0)"
+    },
+    {
+      "name": "ollama_cli",
+      "severity": "advisory",
+      "ok": false,
+      "detail": "ollama not on PATH"
+    },
+    {
+      "name": "openclaw_doctor",
+      "severity": "required",
+      "ok": true,
+      "detail": "wrote operator/reports/doctor-latest.txt"
+    },
+    {
+      "name": "playwright_runtime_check",
+      "severity": "advisory",
+      "ok": true,
+      "detail": "screenshot ok"
+    },
+    {
+      "name": "ollama_model_probe",
+      "severity": "advisory",
+      "ok": false,
+      "detail": "node:internal/deps/undici/undici:14976\n      Error.captureStackTrace(err);\n            ^\n\nTypeError: fetch failed\n    at node:internal/deps/undici/undici:14976:13\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async getJson (file:///Users/NewUser/openclaw/operator/scripts/test-local-models.mjs:19:15)\n    at async file:///Users/NewUser/openclaw/operator/scripts/test-local-models.mjs:64:14 {\n  [cause]: Error: connect ECONNREFUSED 127.0.0.1:11434\n      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16) {\n    errno: -61,\n    code: 'ECONNREFUSED',\n    syscall: 'connect',\n    address: '127.0.0.1',\n    port: 11434\n  }\n}\n\nNode.js v22.22.2\n"
+    },
+    {
+      "name": "sasha_emit_runtime_plan",
+      "severity": "advisory",
+      "ok": true,
+      "detail": "plan emitted"
+    }
+  ]
+}

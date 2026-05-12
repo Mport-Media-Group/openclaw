@@ -1,0 +1,23 @@
+{
+  "$comment": "Example only — merge patterns into openclaw.json and operator runbooks; not loaded automatically by OpenClaw.",
+  "approvalTiers": {
+    "SAFE": {
+      "description": "Read-only operator tools; no shell mutation.",
+      "exampleTools": ["operator_stack_read", "operator_stack_models", "github_rate_limit"]
+    },
+    "ELEVATED": {
+      "description": "OAuth APIs and repo writes with explicit human approval per action.",
+      "requires": ["audit_log", "scoped_token"]
+    },
+    "ADMIN": {
+      "description": "Infra and IRIS; break-glass credentials; minimal surface area."
+    },
+    "AUTONOMOUS": {
+      "description": "Discouraged on Intel 8GB laptops; use cloud runners instead."
+    }
+  },
+  "auditLog": {
+    "path": "operator/logs/audit.jsonl",
+    "fields": ["timestamp", "agentId", "toolName", "outcome"]
+  }
+}

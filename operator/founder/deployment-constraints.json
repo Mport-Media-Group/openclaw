@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "governance": {
+    "approvalGatedMutations": true,
+    "auditabilityRequired": true,
+    "enterpriseSafeDefaults": true,
+    "deterministicControlOverAdvisoryAI": true,
+    "noAutonomousResourceCreationWithoutReview": true
+  },
+  "execution": {
+    "sequentialOrchestrationDefault": true,
+    "thermalAndRamAware": true
+  }
+}

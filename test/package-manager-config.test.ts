@@ -27,4 +27,11 @@ describe("package manager build policy", () => {
     expect(workspace.allowBuilds?.["@discordjs/opus"]).toBe(false);
     expect(workspace.onlyBuiltDependencies ?? []).not.toContain("@discordjs/opus");
   });
+
+  it("disables blockExoticSubdeps so Baileys can resolve libsignal git subdeps (WhatsApp)", () => {
+    const workspace = parse(fs.readFileSync("pnpm-workspace.yaml", "utf8")) as WorkspaceConfig & {
+      blockExoticSubdeps?: boolean;
+    };
+    expect(workspace.blockExoticSubdeps).toBe(false);
+  });
 });

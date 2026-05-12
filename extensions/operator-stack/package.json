@@ -1,0 +1,13 @@
+{
+  "name": "@openclaw/operator-stack-plugin",
+  "version": "2026.5.10-beta.1",
+  "private": true,
+  "description": "OpenClaw enterprise operator stack helpers (manifest reads, GitHub rate limit)",
+  "type": "module",
+  "devDependencies": {
+    "@openclaw/plugin-sdk": "workspace:*"
+  },
+  "openclaw": {
+    "extensions": ["./index.ts"]
+  }
+}

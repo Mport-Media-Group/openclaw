@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "id": "sasha",
+      "openclawAgentName": "sasha",
+      "purpose": "Executive orchestration",
+      "suggestedWorkspace": "~/.openclaw/workspace-sasha",
+      "defaultApproval": "ELEVATED"
+    },
+    {
+      "id": "dcb_operator",
+      "openclawAgentName": "dcb",
+      "purpose": "DCB workflows",
+      "suggestedWorkspace": "~/.openclaw/workspace-dcb",
+      "defaultApproval": "ELEVATED"
+    },
+    {
+      "id": "devops",
+      "openclawAgentName": "devops",
+      "purpose": "AWS and infra",
+      "suggestedWorkspace": "~/.openclaw/workspace-devops",
+      "defaultApproval": "ADMIN"
+    },
+    {
+      "id": "linkedin",
+      "openclawAgentName": "linkedin",
+      "purpose": "Networking and content (human-in-the-loop)",
+      "suggestedWorkspace": "~/.openclaw/workspace-linkedin",
+      "defaultApproval": "SAFE"
+    },
+    {
+      "id": "canva",
+      "openclawAgentName": "canva",
+      "purpose": "Marketing assets",
+      "suggestedWorkspace": "~/.openclaw/workspace-canva",
+      "defaultApproval": "SAFE"
+    },
+    {
+      "id": "zoho",
+      "openclawAgentName": "zoho",
+      "purpose": "CRM and email",
+      "suggestedWorkspace": "~/.openclaw/workspace-zoho",
+      "defaultApproval": "ELEVATED"
+    },
+    {
+      "id": "iris",
+      "openclawAgentName": "iris",
+      "purpose": "InterSystems IRIS ops",
+      "suggestedWorkspace": "~/.openclaw/workspace-iris",
+      "defaultApproval": "ADMIN"
+    },
+    {
+      "id": "research",
+      "openclawAgentName": "research",
+      "purpose": "Web intelligence",
+      "suggestedWorkspace": "~/.openclaw/workspace-research",
+      "defaultApproval": "SAFE"
+    },
+    {
+      "id": "git",
+      "openclawAgentName": "git",
+      "purpose": "Repository management",
+      "suggestedWorkspace": "~/.openclaw/workspace-git",
+      "defaultApproval": "ELEVATED"
+    }
+  ]
+}

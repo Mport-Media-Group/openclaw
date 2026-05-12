@@ -1,0 +1,12 @@
+{
+  "local": {
+    "automation": "qwen2.5:3b",
+    "coding": "deepseek-coder:1.3b",
+    "utility": "gemma:2b"
+  },
+  "cloud": {
+    "strategic": "gpt-5",
+    "reasoning": "gemini-2.5-pro",
+    "documents": "claude"
+  }
+}

@@ -1,0 +1,13 @@
+*.log
+last-validation.json
+screenshots/
+doctor-*.txt
+browser-runtime-check.png
+ollama-model-check.json
+ollama-health-out.json
+intersystems-runtime-health-out.json
+sasha-runtime-plan.json
+memory-health-out.json
+runtime-health-out.json
+github-operator-report.md
+founder-health-out.json

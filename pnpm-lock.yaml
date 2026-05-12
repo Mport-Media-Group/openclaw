@@ -1253,6 +1253,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-sdk
 
+  extensions/operator-stack:
+    devDependencies:
+      '@openclaw/plugin-sdk':
+        specifier: workspace:*
+        version: link:../../packages/plugin-sdk
+
   extensions/perplexity:
     devDependencies:
       '@openclaw/plugin-sdk':

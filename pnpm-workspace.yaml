@@ -4,6 +4,12 @@ packages:
   - packages/*
   - extensions/*
 
+# Baileys (WhatsApp) pulls `@whiskeysockets/libsignal-node` via a git/tarball
+# subdependency; pnpm v11 defaults `blockExoticSubdeps` to true, which rejects
+# that chain (ERR_PNPM_EXOTIC_SUBDEP). Relax only this policy so installs work.
+# See CHANGELOG (WhatsApp / #76539) and docs/channels/whatsapp.md.
+blockExoticSubdeps: false
+
 minimumReleaseAge: 2880
 
 minimumReleaseAgeExclude:

@@ -1,0 +1,24 @@
+{
+  "id": "operator-stack",
+  "activation": {
+    "onStartup": false
+  },
+  "name": "Operator stack",
+  "description": "Read operator manifest files under a configured stack root and query GitHub API rate limits (optional PAT).",
+  "providerAuthEnvVars": {
+    "github": ["GITHUB_TOKEN", "GH_TOKEN"]
+  },
+  "contracts": {
+    "tools": ["operator_stack_read", "operator_stack_models", "github_rate_limit"]
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "stackRoot": {
+        "type": "string",
+        "description": "Absolute path to the operator directory containing configs/ and agents/."
+      }
+    }
+  }
+}

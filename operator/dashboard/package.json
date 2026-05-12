@@ -1,0 +1,20 @@
+{
+  "name": "openclaw-operator-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/sync-reports.mjs",
+    "dev": "vite",
+    "build": "node scripts/sync-reports.mjs && vite build",
+    "preview": "vite preview",
+    "sync-reports": "node scripts/sync-reports.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.3.4",
+    "vite": "5.4.11"
+  }
+}

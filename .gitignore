@@ -230,3 +230,12 @@ extensions/**/.openclaw-runtime-deps-stamp.json
 /.opengrep-out/
 /.crabbox-artifacts
 .comux*
+
+# Enterprise operator stack (local venv, secrets, generated logs)
+operator/.venv/
+operator/**/.env
+operator/**/.env.*
+!operator/env/*.example.*
+operator/logs/
+operator/chroma-data/
+operator/python-sidecars/.venv/

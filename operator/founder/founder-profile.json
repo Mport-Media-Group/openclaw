@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "identity": {
+    "name": "Michael Porter",
+    "titles": ["Founder", "CEO", "Systems architect", "AI-native builder"],
+    "organizations": [
+      "Mport Media Group",
+      "Discharge Bridge",
+      "AgentEcos",
+      "Sasha"
+    ],
+    "domains": [
+      "Healthcare interoperability",
+      "AI orchestration",
+      "Enterprise systems architecture",
+      "Governed multi-agent operations"
+    ]
+  },
+  "disclaimer": "Operational context for agents and tooling only. Not medical advice. No PHI belongs in this pack."
+}

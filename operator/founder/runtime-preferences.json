@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "cloudPrimary": "gcp",
+  "preferences": {
+    "compute": "cloud_run_preferred",
+    "documentData": "firestore_preferred",
+    "reasoningProviders": ["vertex_ai", "gemini_family_preferred"],
+    "developmentEnvironment": "cursor_preferred",
+    "localRuntime": "lightweight_sequential_only",
+    "heavyReasoning": "cloud_first",
+    "browserAutomation": "preferred_over_brittle_unauthenticated_scraping",
+    "mutationsDefault": "read_only_unless_explicitly_approved"
+  },
+  "orchestration": {
+    "noUncontrolledSwarms": true,
+    "sequentialExecutionOnConstrainedHardware": true
+  }
+}

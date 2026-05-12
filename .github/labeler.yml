@@ -392,6 +392,12 @@
   - changed-files:
       - any-glob-to-any-file:
           - "extensions/moonshot/**"
+"extensions: operator-stack":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "extensions/operator-stack/**"
+          - "docs/plugins/operator-stack.md"
+          - "operator/**"
 "extensions: nvidia":
   - changed-files:
       - any-glob-to-any-file:

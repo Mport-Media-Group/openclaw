@@ -1,0 +1,4 @@
+# Optional Chroma sidecar (install in .venv only). Heavy on 8GB RAM — prefer
+# OpenClaw memory plugins (wiki / LanceDB) first.
+chromadb>=0.5.0
+sentence-transformers>=3.0.0

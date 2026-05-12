@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "productHierarchy": [
+    {
+      "name": "Discharge Bridge",
+      "role": "Healthcare orchestration layer",
+      "focus": ["Hospital to post-acute coordination", "Interoperability-first workflows"]
+    },
+    {
+      "name": "AgentEcos",
+      "role": "Multi-agent governance and runtime",
+      "focus": ["Governed autonomy", "Policy and approval alignment"]
+    },
+    {
+      "name": "Sasha",
+      "role": "Meta-intelligence and operator control plane",
+      "focus": ["Orchestration metadata", "Health and routing hints (not a second gateway)"]
+    }
+  ],
+  "goToMarket": {
+    "primary": "Michigan_first",
+    "notes": "Regional depth before national scale; enterprise deployment readiness and investor-grade architecture discipline."
+  },
+  "vision": {
+    "interoperabilityInfrastructure": true,
+    "globalOrchestrationVision": "long_term_phased",
+    "noCustomerOrPatientIdentifiersInOperatorRepos": true
+  }
+}
