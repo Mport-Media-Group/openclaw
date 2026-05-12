@@ -15,6 +15,7 @@ engineering philosophy, infrastructure preferences, and strategic hierarchy.
 - `import { getFounderContextSummary, loadFounderContextSync } from "./load-founder-context.mjs"`
 - Validation: `node operator/founder/founder-health.mjs`
 - Optional full OpenClaw CLI readiness from the repo root: `pnpm claw:max-readiness` (doctor plus per-agent `skills check`)
+- Optional CLI binaries without Homebrew (macOS): `pnpm claw:install-cli-prereqs` → `~/.local/bin` (`gh`, `jq`, `rg`, Intel `ffmpeg`); add that dir to `PATH`
 
 ## OpenClaw agents (`operator-stack` plugin)
 

@@ -13,6 +13,8 @@ See [docs/HOST_SETUP.md](docs/HOST_SETUP.md) for machine prep, [docs/LOCAL_VERIF
 
 **OpenClaw CLI readiness** (run from the parent OpenClaw git repo root): `pnpm claw:max-readiness` runs `openclaw doctor` and `openclaw skills check` for the default agent and each agent in `openclaw agents list --json`. Use `--skip-doctor` on the underlying script if you only need skills checks.
 
+**CLI tools without Homebrew** (macOS): `pnpm claw:install-cli-prereqs` installs `gh`, `jq`, `rg`, and on Intel a static `ffmpeg` into `~/.local/bin` (or `OPENCLAW_LOCAL_BIN`); prepend that directory to `PATH` for the gateway and your shell. With Homebrew present, it runs `brew install gh ffmpeg jq ripgrep` instead.
+
 **Scripts (operator-local ESM)**:
 
 - `node operator/browser-automation/runtime-check.mjs` — Playwright Chromium smoke + screenshot under `reports/` (gitignored).

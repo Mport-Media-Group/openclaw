@@ -1336,6 +1336,7 @@
     "canon:enforce": "node scripts/canon.mjs enforce --json",
     "canvas:a2ui:bundle": "node scripts/bundle-a2ui.mjs",
     "changed:lanes": "node scripts/changed-lanes.mjs",
+    "claw:install-cli-prereqs": "node scripts/install-openclaw-cli-prereqs.mjs",
     "claw:max-readiness": "node scripts/claw-max-readiness.mjs",
     "check": "node scripts/check.mjs",
     "check:architecture": "pnpm check:import-cycles && pnpm check:madge-import-cycles && pnpm check:deprecated-api-usage && pnpm check:deprecated-jsdoc",
