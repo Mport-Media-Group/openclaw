@@ -1684,6 +1684,8 @@ export function renderApp(state: AppViewState) {
               usageResult: state.usageResult,
               sessionsResult: state.sessionsResult,
               skillsReport: state.skillsReport,
+              executiveStatus: state.executiveStatusResult,
+              executiveStatusError: state.executiveStatusError,
               cronJobs: state.cronJobs,
               cronStatus: state.cronStatus,
               attentionItems: state.attentionItems,

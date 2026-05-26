@@ -108,6 +108,7 @@ import type {
   CronJob,
   CronRunLogEntry,
   CronStatus,
+  ExecutiveStatusResult,
   HealthSummary,
   LogEntry,
   LogLevel,
@@ -526,6 +527,9 @@ export class OpenClawApp extends LitElement {
   @state() overviewShowGatewayPassword = false;
   @state() overviewLogLines: string[] = [];
   @state() overviewLogCursor = 0;
+  @state() executiveStatusLoading = false;
+  @state() executiveStatusResult: ExecutiveStatusResult | null = null;
+  @state() executiveStatusError: string | null = null;
 
   @state() skillsLoading = false;
   @state() skillsReport: SkillStatusReport | null = null;

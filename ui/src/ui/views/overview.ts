@@ -11,6 +11,7 @@ import type {
   AttentionItem,
   CronJob,
   CronStatus,
+  ExecutiveStatusResult,
   ModelAuthStatusResult,
   SessionsListResult,
   SessionsUsageResult,
@@ -20,6 +21,7 @@ import { renderConnectCommand } from "./connect-command.ts";
 import { renderOverviewAttention } from "./overview-attention.ts";
 import { renderOverviewCards } from "./overview-cards.ts";
 import { renderOverviewEventLog } from "./overview-event-log.ts";
+import { renderOverviewExecutive } from "./overview-executive.ts";
 import {
   resolveAuthHintKind,
   type PairingHint,
@@ -46,6 +48,8 @@ export type OverviewProps = {
   usageResult: SessionsUsageResult | null;
   sessionsResult: SessionsListResult | null;
   skillsReport: SkillStatusReport | null;
+  executiveStatus: ExecutiveStatusResult | null;
+  executiveStatusError: string | null;
   cronJobs: CronJob[];
   cronStatus: CronStatus | null;
   attentionItems: AttentionItem[];
@@ -460,6 +464,11 @@ export function renderOverview(props: OverviewProps) {
       modelAuthStatus: props.modelAuthStatus,
       presenceCount: props.presenceCount,
       onNavigate: props.onNavigate,
+    })}
+    ${renderOverviewExecutive({
+      connected: props.connected,
+      executiveStatus: props.executiveStatus,
+      executiveStatusError: props.executiveStatusError,
     })}
     ${renderOverviewAttention({ items: props.attentionItems })}
 

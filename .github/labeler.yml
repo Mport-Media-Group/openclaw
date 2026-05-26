@@ -300,6 +300,12 @@
   - changed-files:
       - any-glob-to-any-file:
           - "extensions/duckduckgo/**"
+"extensions: executive-ops":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "extensions/executive-ops/**"
+          - "docs/plugins/executive-ops.md"
+          - "docs/plugins/reference/executive-ops.md"
 "extensions: acpx":
   - changed-files:
       - any-glob-to-any-file:

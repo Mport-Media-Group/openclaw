@@ -22,6 +22,7 @@ See [docs/HOST_SETUP.md](docs/HOST_SETUP.md) for machine prep, [docs/LOCAL_VERIF
 - `node operator/runtime/provider-health.mjs` — env presence + Ollama ping; optional `OPERATOR_PROVIDER_PROBE=1` for minimal OpenAI/HF reachability (no response bodies logged).
 - `node operator/workflows/github/operator-snapshot.mjs` — read-only GitHub issue summary → `reports/github-operator-report.md` (gitignored).
 - `node operator/memory/memory-health.mjs` / `node operator/sasha/runtime-health.mjs` — JSON health snapshots under `reports/` (gitignored).
+- `node operator/executive/runtime-health.mjs` — Executive OS readiness snapshot for GitHub/Cursor, 1Password, Supabase, browser profiles, and staged DCB signals → `reports/executive-runtime-health.json` (gitignored).
 - `node operator/sasha/emit-runtime-plan.mjs` — writes delegation graph JSON from `agents/registry.json`.
 - `node operator/sasha/approval-engine.mjs <script>` — tier gate for operator scripts (exit **2** when blocked).
 - `node operator/runtime/ollama-health.mjs` — full Ollama tag + generate check → `reports/ollama-health-out.json` (gitignored).

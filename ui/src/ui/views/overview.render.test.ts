@@ -40,6 +40,8 @@ function createOverviewProps(overrides: Partial<OverviewProps> = {}): OverviewPr
     usageResult: null,
     sessionsResult: null,
     skillsReport: null,
+    executiveStatus: null,
+    executiveStatusError: null,
     cronJobs: [],
     cronStatus: null,
     attentionItems: [],
@@ -122,5 +124,95 @@ describe("overview view rendering", () => {
     expect(container.textContent).toContain("Scope upgrade pending approval.");
     expect(container.textContent).toContain("openclaw devices list");
     expect(container.textContent).not.toContain("openclaw devices approve --latest");
+  });
+
+  it("renders the executive status card when the plugin snapshot is available", async () => {
+    const container = document.createElement("div");
+    const props = createOverviewProps({
+      connected: true,
+      executiveStatus: {
+        ok: true,
+        pluginId: "executive-ops",
+        configured: true,
+        identity: { organizationLabel: "DCB", workspaceLabel: "Executive OS" },
+        controller: { controllerId: "exec-main", autoCreateManagedFlow: true },
+        integrations: {
+          github: {
+            enabled: true,
+            repository: "openclaw/openclaw",
+            tokenEnvVar: "GH_TOKEN",
+            tokenPresent: true,
+            watchPullRequests: true,
+            watchReviews: true,
+            requireApprovalForWrites: true,
+          },
+          cursor: {
+            enabled: true,
+            runtime: "acp",
+            harnessId: "cursor",
+            acpEnabled: true,
+            requireApprovalForWrites: true,
+          },
+          vault: {
+            enabled: true,
+            provider: "1password",
+            cliPresent: true,
+            configuredItemCount: 2,
+          },
+          memory: {
+            enabled: true,
+            provider: "supabase",
+            projectUrlEnvVar: "SUPABASE_URL",
+            projectUrlPresent: true,
+            anonKeyEnvVar: "SUPABASE_ANON_KEY",
+            anonKeyPresent: true,
+            serviceRoleEnvVar: "SUPABASE_SERVICE_ROLE_KEY",
+            serviceRolePresent: true,
+            schemaName: "executive_ops",
+            tableName: "executive_memory",
+            embeddingModel: "openai/text-embedding-3-large",
+          },
+          browser: {
+            enabled: true,
+            githubProfile: "github",
+            cursorProfile: "cursor",
+            canvaProfile: "canva",
+            linkedinDraftsOnly: true,
+          },
+          dcb: {
+            enabled: false,
+            cloudRunServices: [],
+            investorMonitoringEnabled: false,
+            complianceMonitoringEnabled: false,
+          },
+        },
+        governance: {
+          auditMode: "append_only",
+          approvalClasses: [{ id: "githubWrites", label: "GitHub writes", required: true }],
+          roles: [
+            {
+              id: "founder-assistant",
+              label: "Founder assistant",
+              allowedIntegrations: ["github", "cursor"],
+              approvalClasses: ["githubWrites"],
+            },
+          ],
+        },
+        runtimeContract: {
+          controllerId: "exec-main",
+          managedFlowConfigured: true,
+          acpCursorReady: true,
+          cronWakeupConfigured: false,
+          notes: [],
+        },
+      },
+    });
+
+    render(renderOverview(props), container);
+    await Promise.resolve();
+
+    expect(container.textContent).toContain("Executive OS");
+    expect(container.textContent).toContain("openclaw/openclaw");
+    expect(container.textContent).toContain("Cursor ACP");
   });
 });

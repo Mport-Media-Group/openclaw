@@ -708,6 +708,108 @@ export type SkillStatusReport = {
   skills: SkillStatusEntry[];
 };
 
+export type ExecutiveStatusResult = {
+  ok: true;
+  pluginId: "executive-ops";
+  configured: boolean;
+  identity: {
+    organizationLabel?: string;
+    workspaceLabel?: string;
+    founderLabel?: string;
+  };
+  controller: {
+    controllerId?: string;
+    ownerSessionKey?: string;
+    taskFlowOwner?: string;
+    autoCreateManagedFlow: boolean;
+    wakeupCronTag?: string;
+  };
+  integrations: {
+    github: {
+      enabled: boolean;
+      repository?: string;
+      defaultBaseBranch?: string;
+      tokenEnvVar: string;
+      tokenPresent: boolean;
+      watchPullRequests: boolean;
+      watchReviews: boolean;
+      requireApprovalForWrites: boolean;
+    };
+    cursor: {
+      enabled: boolean;
+      runtime: "acp";
+      harnessId: string;
+      cwd?: string;
+      defaultModel?: string;
+      acpEnabled: boolean;
+      binaryName?: string;
+      binaryPath?: string;
+      requireApprovalForWrites: boolean;
+    };
+    vault: {
+      enabled: boolean;
+      provider: "1password";
+      cliPresent: boolean;
+      cliPath?: string;
+      account?: string;
+      vault?: string;
+      configuredItemCount: number;
+    };
+    memory: {
+      enabled: boolean;
+      provider: "supabase";
+      projectUrlEnvVar: string;
+      projectUrlPresent: boolean;
+      anonKeyEnvVar: string;
+      anonKeyPresent: boolean;
+      serviceRoleEnvVar: string;
+      serviceRolePresent: boolean;
+      schemaName: string;
+      tableName: string;
+      embeddingModel: string;
+    };
+    browser: {
+      enabled: boolean;
+      profilesRoot?: string;
+      githubProfile: string;
+      cursorProfile: string;
+      canvaProfile: string;
+      linkedinDraftsOnly: boolean;
+    };
+    dcb: {
+      enabled: boolean;
+      gcpProjectId?: string;
+      firebaseProjectId?: string;
+      firestoreDatabase?: string;
+      cloudRunServices: string[];
+      investorMonitoringEnabled: boolean;
+      complianceMonitoringEnabled: boolean;
+    };
+  };
+  governance: {
+    auditMode: "append_only" | "advisory";
+    approvalClasses: Array<{
+      id: string;
+      label: string;
+      required: boolean;
+    }>;
+    roles: Array<{
+      id: string;
+      label: string;
+      allowedIntegrations: string[];
+      approvalClasses: string[];
+    }>;
+  };
+  runtimeContract: {
+    taskFlowOwner?: string;
+    controllerId?: string;
+    managedFlowConfigured: boolean;
+    acpCursorReady: boolean;
+    cronWakeupConfigured: boolean;
+    notes: string[];
+  };
+};
+
 export type StatusSummary = Record<string, unknown>;
 
 export type HealthSnapshot = Record<string, unknown>;

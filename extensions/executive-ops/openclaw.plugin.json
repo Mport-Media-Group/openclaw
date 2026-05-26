@@ -1,0 +1,209 @@
+{
+  "id": "executive-ops",
+  "enabledByDefault": false,
+  "activation": {
+    "onStartup": false
+  },
+  "name": "Executive ops",
+  "description": "Executive control-plane contracts, GitHub/Cursor milestone helpers, governance defaults, and Control UI status surfaces.",
+  "contracts": {
+    "tools": ["executive_status", "executive_github_snapshot", "executive_repo_plan"]
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "identity": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "organizationLabel": { "type": "string" },
+          "workspaceLabel": { "type": "string" },
+          "founderLabel": { "type": "string" }
+        }
+      },
+      "controller": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "controllerId": { "type": "string" },
+          "ownerSessionKey": { "type": "string" },
+          "taskFlowOwner": { "type": "string" },
+          "autoCreateManagedFlow": { "type": "boolean" },
+          "wakeupCronTag": { "type": "string" }
+        }
+      },
+      "github": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "repository": { "type": "string" },
+          "defaultBaseBranch": { "type": "string" },
+          "tokenEnvVar": { "type": "string" },
+          "watchPullRequests": { "type": "boolean" },
+          "watchReviews": { "type": "boolean" },
+          "requireApprovalForWrites": { "type": "boolean" }
+        }
+      },
+      "cursor": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "runtime": {
+            "type": "string",
+            "enum": ["acp"]
+          },
+          "harnessId": { "type": "string" },
+          "cwd": { "type": "string" },
+          "defaultModel": { "type": "string" },
+          "requireApprovalForWrites": { "type": "boolean" }
+        }
+      },
+      "vault": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "provider": {
+            "type": "string",
+            "enum": ["1password"]
+          },
+          "account": { "type": "string" },
+          "vault": { "type": "string" },
+          "githubItem": { "type": "string" },
+          "cursorItem": { "type": "string" },
+          "browserItem": { "type": "string" }
+        }
+      },
+      "memory": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "provider": {
+            "type": "string",
+            "enum": ["supabase"]
+          },
+          "projectUrlEnvVar": { "type": "string" },
+          "anonKeyEnvVar": { "type": "string" },
+          "serviceRoleEnvVar": { "type": "string" },
+          "schemaName": { "type": "string" },
+          "tableName": { "type": "string" },
+          "embeddingModel": { "type": "string" }
+        }
+      },
+      "governance": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "auditMode": {
+            "type": "string",
+            "enum": ["append_only", "advisory"]
+          },
+          "approvalClasses": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "githubWrites": { "type": "boolean" },
+              "cursorWrites": { "type": "boolean" },
+              "publicPosts": { "type": "boolean" },
+              "emails": { "type": "boolean" },
+              "deploymentPushes": { "type": "boolean" },
+              "credentialChanges": { "type": "boolean" },
+              "investorMessaging": { "type": "boolean" },
+              "legalDocs": { "type": "boolean" }
+            }
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string" },
+                "label": { "type": "string" },
+                "allowedIntegrations": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "approvalClasses": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              },
+              "required": ["id"]
+            }
+          }
+        }
+      },
+      "browser": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "profilesRoot": { "type": "string" },
+          "githubProfile": { "type": "string" },
+          "cursorProfile": { "type": "string" },
+          "canvaProfile": { "type": "string" },
+          "linkedinDraftsOnly": { "type": "boolean" }
+        }
+      },
+      "dcb": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "gcpProjectId": { "type": "string" },
+          "firebaseProjectId": { "type": "string" },
+          "firestoreDatabase": { "type": "string" },
+          "cloudRunServices": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "investorMonitoringEnabled": { "type": "boolean" },
+          "complianceMonitoringEnabled": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "uiHints": {
+    "identity.organizationLabel": {
+      "label": "Organization Label",
+      "help": "Human-facing organization name for the executive control plane."
+    },
+    "identity.workspaceLabel": {
+      "label": "Workspace Label",
+      "help": "Short name for the current executive workspace or operating environment."
+    },
+    "controller.controllerId": {
+      "label": "Controller ID",
+      "help": "Stable controller id for task-flow ownership, wakeups, and audit summaries."
+    },
+    "github.repository": {
+      "label": "GitHub Repository",
+      "help": "Primary owner/repo used for executive GitHub summaries and reviews."
+    },
+    "cursor.cwd": {
+      "label": "Cursor Working Directory",
+      "help": "Default working directory for Cursor ACP orchestration."
+    },
+    "memory.projectUrlEnvVar": {
+      "label": "Supabase URL Env Var",
+      "help": "Environment variable name that stores the Supabase project URL."
+    },
+    "memory.serviceRoleEnvVar": {
+      "label": "Supabase Service Role Env Var",
+      "help": "Environment variable name for the service role key used by durable memory jobs."
+    },
+    "vault.provider": {
+      "label": "Vault Provider",
+      "help": "Preferred secret store for executive integrations."
+    },
+    "browser.linkedinDraftsOnly": {
+      "label": "LinkedIn Drafts Only",
+      "help": "Preserve the operator policy that LinkedIn automation remains draft-only and human sent."
+    }
+  }
+}

@@ -28,6 +28,7 @@ import type {
   ChannelsStatusSnapshot,
   ConfigSnapshot,
   ConfigUiHints,
+  ExecutiveStatusResult,
   HealthSummary,
   LogEntry,
   LogLevel,
@@ -424,6 +425,9 @@ export type AppViewState = {
     overviewShowGatewayPassword: boolean;
     overviewLogLines: string[];
     overviewLogCursor: number;
+    executiveStatusLoading: boolean;
+    executiveStatusResult: ExecutiveStatusResult | null;
+    executiveStatusError: string | null;
     client: GatewayBrowserClient | null;
     refreshSessionsAfterChat: Set<string>;
     connect: () => void;

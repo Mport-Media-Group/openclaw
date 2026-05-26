@@ -73,7 +73,7 @@ import {
 import { normalizeOptionalString } from "./string-coerce.ts";
 import { startThemeTransition, type ThemeTransitionContext } from "./theme-transition.ts";
 import { resolveTheme, type ResolvedTheme, type ThemeMode, type ThemeName } from "./theme.ts";
-import type { AgentsListResult, AttentionItem } from "./types.ts";
+import type { AgentsListResult, AttentionItem, ExecutiveStatusResult } from "./types.ts";
 import { normalizeLocalUserIdentity } from "./user-identity.ts";
 import { resetChatViewState } from "./views/chat.ts";
 
@@ -145,6 +145,9 @@ type SettingsAppHost = SettingsHost &
   UsageState & {
     overviewLogCursor: number | null;
     overviewLogLines: string[];
+    executiveStatusLoading: boolean;
+    executiveStatusResult: ExecutiveStatusResult | null;
+    executiveStatusError: string | null;
     attentionItems: AttentionItem[];
     hello: { auth?: { role?: string; scopes?: string[] } } | null;
   };
@@ -667,6 +670,7 @@ export async function loadOverview(host: SettingsHost, opts?: { refresh?: boolea
     loadSkills(app),
     loadUsage(app),
     loadOverviewLogs(app),
+    loadExecutiveStatus(app),
     // `refresh: true` bypasses the gateway's 60s auth-status cache so a
     // user-initiated refresh surfaces post-re-auth state immediately.
     loadModelAuthStatusState(app, { refresh: opts?.refresh }),
@@ -687,6 +691,30 @@ export async function loadOverview(host: SettingsHost, opts?: { refresh?: boolea
       { console: false },
     );
   });
+}
+
+async function loadExecutiveStatus(host: SettingsAppHost) {
+  if (!host.client || !host.connected) {
+    host.executiveStatusResult = null;
+    host.executiveStatusError = null;
+    return;
+  }
+  if (host.executiveStatusLoading) {
+    return;
+  }
+  host.executiveStatusLoading = true;
+  host.executiveStatusError = null;
+  try {
+    host.executiveStatusResult = (await host.client.request(
+      "executive.status",
+      {},
+    )) as ExecutiveStatusResult;
+  } catch (error) {
+    host.executiveStatusResult = null;
+    host.executiveStatusError = error instanceof Error ? error.message : String(error);
+  } finally {
+    host.executiveStatusLoading = false;
+  }
 }
 
 export function hasOperatorReadAccess(
@@ -845,6 +873,16 @@ function buildAttentionItems(host: SettingsAppHost) {
           .join(", "),
       });
     }
+  }
+
+  const executive = host.executiveStatusResult;
+  if (executive?.runtimeContract.notes.length) {
+    items.push({
+      severity: executive.configured ? "warning" : "info",
+      icon: "sparkles",
+      title: "Executive OS setup notes",
+      description: executive.runtimeContract.notes[0] ?? "Executive OS needs configuration.",
+    });
   }
 
   host.attentionItems = items;
