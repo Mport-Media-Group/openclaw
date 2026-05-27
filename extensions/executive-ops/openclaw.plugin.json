@@ -7,7 +7,12 @@
   "name": "Executive ops",
   "description": "Executive control-plane contracts, GitHub/Cursor milestone helpers, governance defaults, and Control UI status surfaces.",
   "contracts": {
-    "tools": ["executive_status", "executive_github_snapshot", "executive_repo_plan"]
+    "tools": [
+      "executive_status",
+      "executive_github_snapshot",
+      "executive_repo_plan",
+      "executive_speak"
+    ]
   },
   "configSchema": {
     "type": "object",

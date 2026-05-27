@@ -6,6 +6,8 @@ Run:
 
 ```bash
 node operator/executive/runtime-health.mjs
+node operator/executive/speak-voice.mjs --voice male "Operator line."
+node operator/executive/speak-voice.mjs --voice female "OpenClaw agent line."
 ```
 
 The script reports:

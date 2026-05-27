@@ -35,6 +35,7 @@ The initial milestone focuses on GitHub + Cursor:
 
 - `executive_github_snapshot`
 - `executive_repo_plan`
+- `executive_speak` (ElevenLabs: `male` operator voice, `female`/`agent` sultry OpenClaw voice)
 - `executive_status`
 - `executive.status` Gateway method for Control UI
 - `executive.githubSnapshot` Gateway method for operator-grade read-only GitHub summaries
@@ -114,6 +115,9 @@ renders an Executive OS card with:
 - `executive_status` - executive readiness, controller ownership, governance, vault, memory, and staged surfaces
 - `executive_github_snapshot` - read-only repo summary with issues, pull requests, and recent workflows
 - `executive_repo_plan` - deterministic checklist for GitHub, Cursor, dashboard, memory, governance, browser, DCB, or broad executive milestones
+- `executive_speak` - ElevenLabs speech with `voice: "male"` (Cursor operator) or `voice: "female"` / `"agent"` (sultry OpenClaw agent); optional `playLocally` on macOS
+
+Pair with `messages.tts.personas` (`cursor-male`, `openclaw-sultry`) and `agents.list[].tts.persona` so auto-replies use the agent voice. Local operator playback: `node operator/executive/speak-voice.mjs --voice male "..."`.
 
 ## Related docs
 

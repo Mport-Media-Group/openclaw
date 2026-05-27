@@ -40,6 +40,7 @@ describe("executive-ops plugin", () => {
       "executive_status",
       "executive_github_snapshot",
       "executive_repo_plan",
+      "executive_speak",
     ]);
     expect(registerGatewayMethod.mock.calls.map((call) => call[0])).toEqual([
       "executive.status",

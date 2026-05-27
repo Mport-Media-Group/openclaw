@@ -1,6 +1,7 @@
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createExecutiveGithubSnapshotTool } from "./src/executive-github-snapshot-tool.js";
 import { createExecutiveRepoPlanTool } from "./src/executive-repo-plan-tool.js";
+import { createExecutiveSpeakTool } from "./src/executive-speak-tool.js";
 import { createExecutiveStatusTool } from "./src/executive-status-tool.js";
 import { buildExecutiveGithubSnapshot } from "./src/github.js";
 import { buildExecutiveStatus } from "./src/status.js";
@@ -23,6 +24,9 @@ export default definePluginEntry({
     });
     api.registerTool((ctx) => createExecutiveRepoPlanTool(api, ctx), {
       name: "executive_repo_plan",
+    });
+    api.registerTool((ctx) => createExecutiveSpeakTool(api, ctx), {
+      name: "executive_speak",
     });
     api.registerGatewayMethod(
       "executive.status",
