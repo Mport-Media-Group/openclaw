@@ -40,12 +40,12 @@ Config lives under `plugins.entries["executive-ops"].config` in `openclaw.json`.
 
 **Tools** (require `executive-ops` enabled):
 
-| Tool                        | Use for DCB                                                   |
-| --------------------------- | ------------------------------------------------------------- |
-| `executive_status`          | Readiness: DCB surface, governance, vault, memory             |
-| `executive_repo_plan`       | `surface: "dcb"` — deterministic checklist for DCB milestones |
-| `executive_github_snapshot` | Repo/issue/PR watch (read-only)                               |
-| `executive_speak`           | TTS; agent voice `female` / `agent`, operator `male`          |
+| Tool                        | Use for DCB                                                      |
+| --------------------------- | ---------------------------------------------------------------- |
+| `executive_status`          | Readiness: DCB surface, governance, vault, memory                |
+| `executive_repo_plan`       | `surface: "dcb"` — deterministic checklist for DCB milestones    |
+| `executive_github_snapshot` | Repo/issue/PR watch (read-only)                                  |
+| `executive_speak`           | TTS; agent `female`/`agent` (+ optional `mode`), operator `male` |
 
 **Approval classes** for `surface: "dcb"`: `deploymentPushes`, `legalDocs`. Treat investor messaging and public posts as human-approved even when drafting.
 

@@ -1,7 +1,11 @@
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { describe, expect, it, vi } from "vitest";
 import { createExecutiveSpeakTool } from "./executive-speak-tool.js";
-import { EXECUTIVE_CURSOR_MALE_VOICE, EXECUTIVE_OPENCLAW_FEMALE_VOICE } from "./voice-profiles.js";
+import {
+  buildSashaAgentVoiceProfile,
+  EXECUTIVE_CURSOR_MALE_VOICE,
+  SASHA_RACHEL_VOICE_ID,
+} from "./voice-profiles.js";
 
 describe("executive_speak tool", () => {
   it("synthesizes male and female voice roles with ElevenLabs overrides", async () => {
@@ -33,7 +37,37 @@ describe("executive_speak tool", () => {
       EXECUTIVE_CURSOR_MALE_VOICE.voiceId,
     );
     expect(agentCall.overrides?.providerOverrides?.elevenlabs?.voiceId).toBe(
-      EXECUTIVE_OPENCLAW_FEMALE_VOICE.voiceId,
+      buildSashaAgentVoiceProfile("default").voiceId,
     );
+  });
+
+  it("applies Sasha voice mode overrides for agent role", async () => {
+    const textToSpeech = vi.fn(async () => ({
+      success: true,
+      audioPath: "/tmp/executive-speak-mode.mp3",
+      provider: "elevenlabs",
+    }));
+    const api = createTestPluginApi({
+      runtime: {
+        config: { current: () => ({ messages: { tts: { provider: "elevenlabs" } } }) },
+        tts: { textToSpeech },
+      } as never,
+    });
+    const tool = createExecutiveSpeakTool(api, { agentId: "sasha" } as never);
+    await tool.execute("call-3", {
+      text: "Executive briefing.",
+      voice: "agent",
+      mode: "executive",
+    });
+
+    const call = textToSpeech.mock.calls[0]?.[0] as {
+      overrides?: {
+        providerOverrides?: {
+          elevenlabs?: { voiceSettings?: { stability?: number }; voiceId?: string };
+        };
+      };
+    };
+    expect(call.overrides?.providerOverrides?.elevenlabs?.voiceId).toBe(SASHA_RACHEL_VOICE_ID);
+    expect(call.overrides?.providerOverrides?.elevenlabs?.voiceSettings?.stability).toBe(0.55);
   });
 });

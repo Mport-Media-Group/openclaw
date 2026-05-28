@@ -4,6 +4,7 @@ import { readStringParam } from "openclaw/plugin-sdk/provider-web-search";
 import { Type } from "typebox";
 import {
   buildElevenLabsTtsOverrides,
+  normalizeExecutiveVoiceMode,
   resolveExecutiveVoiceProfile,
   type ExecutiveVoiceRole,
 } from "./voice-profiles.js";
@@ -24,6 +25,24 @@ const ExecutiveSpeakSchema = Type.Object(
         description:
           "When true on macOS, also play the synthesized clip on the gateway host with afplay.",
       }),
+    ),
+    mode: Type.Optional(
+      Type.Union(
+        [
+          Type.Literal("default"),
+          Type.Literal("casual"),
+          Type.Literal("executive"),
+          Type.Literal("comfort"),
+          Type.Literal("flirty"),
+          Type.Literal("alert"),
+          Type.Literal("builder"),
+          Type.Literal("expressive"),
+        ],
+        {
+          description:
+            "Sasha voice mode for female/agent roles: casual, executive, comfort, flirty, alert, builder, expressive (eleven_v3), or default.",
+        },
+      ),
     ),
   },
   { additionalProperties: false },
@@ -76,7 +95,8 @@ export function createExecutiveSpeakTool(api: OpenClawPluginApi, ctx?: OpenClawP
       const text = readStringParam(rawParams, "text", { required: true });
       const voice = normalizeVoiceRole(rawParams.voice, ctx);
       const playLocally = rawParams.playLocally === true;
-      const profile = resolveExecutiveVoiceProfile(voice);
+      const mode = normalizeExecutiveVoiceMode(rawParams.mode);
+      const profile = resolveExecutiveVoiceProfile(voice, mode);
       const cfg = api.runtime.config.current();
       const result = await api.runtime.tts.textToSpeech({
         text,
@@ -108,6 +128,7 @@ export function createExecutiveSpeakTool(api: OpenClawPluginApi, ctx?: OpenClawP
           audioPath: result.audioPath,
           provider: result.provider,
           voiceRole: voice,
+          voiceMode: mode,
           voiceId: profile.voiceId,
           voiceLabel: profile.label,
           ...(localPlayback ? { localPlayback } : {}),

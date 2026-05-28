@@ -12,14 +12,15 @@ Michael Porter uses **spoken replies** via ElevenLabs. Recall this every session
 | Channel | Role | Voice | Persona / flag |
 |--------|------|-------|----------------|
 | **Cursor** (this chat) | Operator | Male (Adam) | `--voice male`, persona `cursor-male` |
-| **OpenClaw agent `sasha`** | Executive orchestration | Sultry female (Lily) | `openclaw-sultry` in gateway TTS |
+| **OpenClaw agent `sasha`** | Executive orchestration | Sasha (Rachel base / `SASHA_VOICE_ID`) | `openclaw-sultry` in gateway TTS |
 
 Voice IDs and profiles: `extensions/executive-ops/src/voice-profiles.ts`.
 
 ## Credentials
 
 - API key: `~/.openclaw/.env` → `ELEVENLABS_API_KEY` (never print, commit, or log).
-- Local speak: `node operator/executive/speak-voice.mjs --voice male "<short line>"`
+- Optional: `SASHA_VOICE_ID` in `~/.openclaw/.env` after custom ElevenLabs Voice Design.
+- Local speak: `node operator/executive/speak-voice.mjs --voice male "<short line>"` or `--voice agent --mode executive "..."`
 
 ## Automation
 
