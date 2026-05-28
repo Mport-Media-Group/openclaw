@@ -17,7 +17,8 @@ export type ExecutiveElevenLabsVoiceProfile = {
   voiceId: string;
   label: string;
   modelId: string;
-  outputFormat: string;
+  /** Local-only playback (e.g. afplay); omit for gateway/channel TTS so Discord gets native Opus. */
+  outputFormat?: string;
   voiceSettings: {
     stability: number;
     similarityBoost: number;
@@ -78,7 +79,6 @@ export function buildSashaAgentVoiceProfile(
       voiceId,
       label: "Sasha agent (expressive)",
       modelId: "eleven_v3",
-      outputFormat: "mp3_44100_128",
       voiceSettings: mergeVoiceSettings(SASHA_BASE_VOICE_SETTINGS),
     };
   }
@@ -87,7 +87,6 @@ export function buildSashaAgentVoiceProfile(
       voiceId,
       label: "Sasha agent (Rachel base)",
       modelId: "eleven_multilingual_v2",
-      outputFormat: "mp3_44100_128",
       voiceSettings: mergeVoiceSettings(SASHA_BASE_VOICE_SETTINGS),
     };
   }
@@ -97,7 +96,6 @@ export function buildSashaAgentVoiceProfile(
     voiceId,
     label: `Sasha agent (${labelSuffix})`,
     modelId: "eleven_multilingual_v2",
-    outputFormat: "mp3_44100_128",
     voiceSettings: mergeVoiceSettings(SASHA_BASE_VOICE_SETTINGS, settingsPartial),
   };
 }
@@ -107,7 +105,6 @@ export const EXECUTIVE_CURSOR_MALE_VOICE: ExecutiveElevenLabsVoiceProfile = {
   voiceId: "pNInz6obpgDQGcFmaJgB",
   label: "Cursor operator (male)",
   modelId: "eleven_multilingual_v2",
-  outputFormat: "mp3_44100_128",
   voiceSettings: {
     stability: 0.55,
     similarityBoost: 0.82,
@@ -167,15 +164,21 @@ export function resolveExecutiveVoiceProfile(
 }
 
 export function buildElevenLabsTtsOverrides(profile: ExecutiveElevenLabsVoiceProfile) {
+  const elevenlabs: {
+    voiceId: string;
+    modelId: string;
+    voiceSettings: ExecutiveElevenLabsVoiceProfile["voiceSettings"];
+    outputFormat?: string;
+  } = {
+    voiceId: profile.voiceId,
+    modelId: profile.modelId,
+    voiceSettings: profile.voiceSettings,
+  };
+  if (profile.outputFormat?.trim()) {
+    elevenlabs.outputFormat = profile.outputFormat.trim();
+  }
   return {
     provider: "elevenlabs" as const,
-    providerOverrides: {
-      elevenlabs: {
-        voiceId: profile.voiceId,
-        modelId: profile.modelId,
-        outputFormat: profile.outputFormat,
-        voiceSettings: profile.voiceSettings,
-      },
-    },
+    providerOverrides: { elevenlabs },
   };
 }

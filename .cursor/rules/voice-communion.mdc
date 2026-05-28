@@ -26,7 +26,7 @@ Voice IDs and profiles: `extensions/executive-ops/src/voice-profiles.ts`.
 
 - User hook `~/.cursor/hooks.json` → `afterAgentResponse` runs `operator/executive/cursor-speak-from-hook.sh` (male voice, `afplay` on macOS).
 - If the hook is active, keep replies TTS-friendly; the hook speaks a trimmed summary of the final message.
-- OpenClaw gateway TTS (`messages.tts.auto: always`) covers **agent `sasha`** replies, not Cursor unless you use the hook or `executive_speak`.
+- OpenClaw gateway TTS (`messages.tts.auto: inbound` — voice when you send voice) covers **agent `sasha`** on channels; use `/tts` or `[[tts:...]]` for explicit audio. Do **not** set global `messages.tts.providers.elevenlabs.outputFormat` (Discord voice bubbles need native Opus, not forced MP3).
 
 ## On failure
 
