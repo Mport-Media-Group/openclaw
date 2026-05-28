@@ -119,6 +119,27 @@ renders an Executive OS card with:
 
 Pair with `messages.tts.personas` (`cursor-male`, `openclaw-sultry`) and `agents.list[].tts.persona` so auto-replies use the agent voice. Local operator playback: `node operator/executive/speak-voice.mjs --voice male "..."`.
 
+### DCB skills (bundled)
+
+Three bundled skills assist Discharge Bridge work (enable under `skills.entries` in `openclaw.json`):
+
+- `dcb-operator` — product context, executive tools, Sasha/operator paths
+- `dcb-cloud-health` — read-only GCP/Firebase/Cloud Run probes
+- `dcb-governance` — PHI, approvals, investor/compliance monitor flags
+
+Reload skills after install: `openclaw skills list` or gateway restart. Default executive agent id: **`sasha`** (`~/.openclaw/workspace-sasha`).
+
+Content program (Canva, LinkedIn, newsletter): workspace `content-program/`, skill `sasha-content-program`, env keys in repo `.env.example`.
+
+### Cursor IDE (hear Composer replies)
+
+OpenClaw does not speak inside Cursor by default. Install the user hook once (paths are on your machine, not in git):
+
+- `~/.cursor/hooks.json` → `afterAgentResponse` → `./hooks/cursor-speak.sh`
+- Script: `operator/executive/cursor-speak-from-hook.sh` (male voice, reads `~/.openclaw/.env`)
+- Rules: `~/.cursor/rules/voice-communion.mdc` and repo `.cursor/rules/voice-communion.mdc` (`alwaysApply: true`)
+- Reload Cursor after editing hooks. Disable temporarily: `export CURSOR_VOICE_DISABLED=1`
+
 ## Related docs
 
 - [ACP agents](/tools/acp-agents)

@@ -1,0 +1,32 @@
+---
+description: ElevenLabs voice for Cursor operator vs OpenClaw agent (Michael Porter)
+alwaysApply: true
+---
+
+# Voice communion
+
+Michael Porter uses **spoken replies** via ElevenLabs. Recall this every session.
+
+## Voices
+
+| Channel | Role | Voice | Persona / flag |
+|--------|------|-------|----------------|
+| **Cursor** (this chat) | Operator | Male (Adam) | `--voice male`, persona `cursor-male` |
+| **OpenClaw agent `sasha`** | Executive orchestration | Sultry female (Lily) | `openclaw-sultry` in gateway TTS |
+
+Voice IDs and profiles: `extensions/executive-ops/src/voice-profiles.ts`.
+
+## Credentials
+
+- API key: `~/.openclaw/.env` → `ELEVENLABS_API_KEY` (never print, commit, or log).
+- Local speak: `node operator/executive/speak-voice.mjs --voice male "<short line>"`
+
+## Automation
+
+- User hook `~/.cursor/hooks.json` → `afterAgentResponse` runs `operator/executive/cursor-speak-from-hook.sh` (male voice, `afplay` on macOS).
+- If the hook is active, keep replies TTS-friendly; the hook speaks a trimmed summary of the final message.
+- OpenClaw gateway TTS (`messages.tts.auto: always`) covers **agent `sasha`** replies, not Cursor unless you use the hook or `executive_speak`.
+
+## On failure
+
+If speech fails, mention it once and continue in text. Do not retry TTS in a loop.
