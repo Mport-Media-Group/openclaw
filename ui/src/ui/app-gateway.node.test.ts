@@ -49,6 +49,9 @@ vi.mock("./gateway.ts", async (importOriginal) => {
       if (method === "models.authStatus") {
         return { ts: 0, providers: [] };
       }
+      if (method === "exec.approval.list" || method === "plugin.approval.list") {
+        return [];
+      }
       return {};
     });
 
@@ -467,24 +470,50 @@ describe("connectGateway", () => {
     }
   });
 
-  it("preserves pending approval requests across reconnect", () => {
+  it("clears stale approval queue on reconnect and replays pending ids from gateway", async () => {
     const host = createHost();
+    const createdAtMs = Date.now();
+    const expiresAtMs = createdAtMs + 60_000;
     host.execApprovalQueue = [
       {
-        id: "approval-1",
+        id: "stale-approval",
         kind: "exec",
-        title: "Approve command",
-        summary: "rm -rf /tmp/nope",
-        createdAtMs: Date.now(),
-        expiresAtMs: Date.now() + 60_000,
-      } as never,
+        request: { command: "rm -rf /tmp/nope" },
+        createdAtMs,
+        expiresAtMs,
+      },
     ];
 
     connectGateway(host);
-    expect(host.execApprovalQueue).toHaveLength(1);
+    expect(host.execApprovalQueue).toHaveLength(0);
 
-    connectGateway(host);
-    expect(host.execApprovalQueue).toHaveLength(1);
+    const client = requireGatewayClient();
+    client.request.mockImplementation(async (method: string) => {
+      if (method === "exec.approval.list") {
+        return [
+          {
+            id: "approval-1",
+            request: { command: "echo ok" },
+            createdAtMs,
+            expiresAtMs,
+          },
+        ];
+      }
+      if (method === "plugin.approval.list") {
+        return [];
+      }
+      if (method === "update.status") {
+        return { sentinel: null };
+      }
+      if (method === "models.authStatus") {
+        return { ts: 0, providers: [] };
+      }
+      return {};
+    });
+    client.emitHello();
+    await vi.waitFor(() => {
+      expect(host.execApprovalQueue).toHaveLength(1);
+    });
     expect(host.execApprovalQueue[0]?.id).toBe("approval-1");
   });
 

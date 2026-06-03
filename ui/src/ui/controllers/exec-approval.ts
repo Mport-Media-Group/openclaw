@@ -188,3 +188,35 @@ export function removeExecApproval(
 ): ExecApprovalRequest[] {
   return pruneExecApprovalQueue(queue).filter((entry) => entry.id !== id);
 }
+
+type ApprovalListClient = {
+  request: (method: string, params: unknown) => Promise<unknown>;
+};
+
+function parsePendingApprovalListItem(
+  method: "exec.approval.list" | "plugin.approval.list",
+  item: unknown,
+): ExecApprovalRequest | null {
+  return method === "plugin.approval.list"
+    ? parsePluginApprovalRequested(item)
+    : parseExecApprovalRequested(item);
+}
+
+export async function syncExecApprovalQueueFromGateway(
+  client: ApprovalListClient,
+): Promise<ExecApprovalRequest[]> {
+  const merged: ExecApprovalRequest[] = [];
+  for (const method of ["exec.approval.list", "plugin.approval.list"] as const) {
+    const list = await client.request(method, {});
+    if (!Array.isArray(list)) {
+      continue;
+    }
+    for (const item of list) {
+      const parsed = parsePendingApprovalListItem(method, item);
+      if (parsed) {
+        merged.push(parsed);
+      }
+    }
+  }
+  return pruneExecApprovalQueue(merged).sort((a, b) => a.createdAtMs - b.createdAtMs);
+}

@@ -1,5 +1,6 @@
 import { LitElement } from "lit";
 import { state } from "lit/decorators.js";
+import { isApprovalNotFoundError } from "../../../src/infra/approval-errors.ts";
 import { i18n, I18nController, isSupportedLocale, t } from "../i18n/index.ts";
 import {
   handleChannelConfigReload as handleChannelConfigReloadInternal,
@@ -1138,6 +1139,12 @@ export class OpenClawApp extends LitElement {
       });
       this.execApprovalQueue = this.execApprovalQueue.filter((entry) => entry.id !== active.id);
     } catch (err) {
+      if (isApprovalNotFoundError(err)) {
+        this.execApprovalQueue = this.execApprovalQueue.filter((entry) => entry.id !== active.id);
+        this.execApprovalError =
+          "This approval expired or the gateway restarted. Re-run the command if you still need it.";
+        return;
+      }
       this.execApprovalError = `Approval failed: ${String(err)}`;
     } finally {
       this.execApprovalBusy = false;

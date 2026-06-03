@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { parseExecApprovalRequested, parsePluginApprovalRequested } from "./exec-approval.ts";
+import { describe, expect, it, vi } from "vitest";
+import {
+  parseExecApprovalRequested,
+  parsePluginApprovalRequested,
+  syncExecApprovalQueueFromGateway,
+} from "./exec-approval.ts";
 
 describe("parseExecApprovalRequested", () => {
   it("returns entries with kind 'exec'", () => {
@@ -140,5 +144,43 @@ describe("parseExecApprovalRequested command spans", () => {
       { startIndex: 5, endIndex: 9 },
       { startIndex: 10, endIndex: 15 },
     ]);
+  });
+});
+
+describe("syncExecApprovalQueueFromGateway", () => {
+  it("merges exec and plugin pending approvals from gateway list methods", async () => {
+    const now = Date.now();
+    const queue = await syncExecApprovalQueueFromGateway({
+      request: vi.fn(async (method: string) => {
+        if (method === "exec.approval.list") {
+          return [
+            {
+              id: "exec-1",
+              request: { command: "echo hi" },
+              createdAtMs: now + 1,
+              expiresAtMs: now + 60_000,
+            },
+          ];
+        }
+        if (method === "plugin.approval.list") {
+          return [
+            {
+              id: "plugin-1",
+              createdAtMs: now,
+              expiresAtMs: now + 60_000,
+              request: {
+                title: "Approve plugin action",
+                description: "details",
+                severity: "high",
+                pluginId: "sage",
+              },
+            },
+          ];
+        }
+        return [];
+      }),
+    });
+
+    expect(queue.map((entry) => entry.id)).toEqual(["plugin-1", "exec-1"]);
   });
 });

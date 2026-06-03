@@ -42,8 +42,8 @@ import {
   parseExecApprovalRequested,
   parseExecApprovalResolved,
   parsePluginApprovalRequested,
-  pruneExecApprovalQueue,
   removeExecApproval,
+  syncExecApprovalQueueFromGateway,
 } from "./controllers/exec-approval.ts";
 import { loadHealthState, type HealthState } from "./controllers/health.ts";
 import {
@@ -493,15 +493,13 @@ export function connectGateway(host: GatewayHost, options?: ConnectGatewayOption
   host.lastErrorCode = null;
   host.hello = null;
   host.connected = false;
+  host.execApprovalQueue = [];
   if (reconnectReason === "seq-gap") {
-    host.execApprovalQueue = pruneExecApprovalQueue(host.execApprovalQueue);
     clearPendingQueueItemsForRun(
       host as unknown as Parameters<typeof clearPendingQueueItemsForRun>[0],
       host.chatRunId ?? undefined,
     );
     shutdownHost.resumeChatQueueAfterReconnect = true;
-  } else {
-    host.execApprovalQueue = pruneExecApprovalQueue(host.execApprovalQueue);
   }
   host.execApprovalError = null;
 
@@ -570,6 +568,20 @@ export function connectGateway(host: GatewayHost, options?: ConnectGatewayOption
         void refreshChatAvatar(host as unknown as Parameters<typeof refreshChatAvatar>[0]);
       }
       void loadHealthState(host as unknown as HealthState);
+      void syncExecApprovalQueueFromGateway(client)
+        .then((queue) => {
+          if (host.client !== client) {
+            return;
+          }
+          host.execApprovalQueue = queue;
+          host.execApprovalError = null;
+        })
+        .catch((err) => {
+          if (host.client !== client) {
+            return;
+          }
+          console.warn("[openclaw] exec approval sync failed:", err);
+        });
       void loadAgentsThenRefreshActiveTab(host);
       // Re-run push reconciliation now that the gateway client is available.
       void host.reconcileWebPushState?.();
