@@ -67,6 +67,18 @@ Logs: `/tmp/openclaw/openclaw-gateway.log` or `openclaw logs --follow`
 
 Talk to Sasha on **Discord** (@Sasha) once the probe shows connected — no Cursor required.
 
+## Control other PCs on your network
+
+See **[NETWORK-NODES.md](./NETWORK-NODES.md)** — pair each machine as an OpenClaw node, approve devices, then `/exec host=node` so Sasha runs commands there.
+
+## AgentEcos GCP
+
+See **[AGENTECOS-GCP.md](./AGENTECOS-GCP.md)** — project `bridgeview-vwsdz`; run `gcloud auth login` once, then Sasha can probe Cloud Run / Firebase via `agentecos-gcp` skill.
+
+## ChatGPT history for Sasha
+
+See **[CHATGPT-ARCHIVE.md](./CHATGPT-ARCHIVE.md)** — export from ChatGPT, then `import-chatgpt-export.sh`; Sasha searches via `wiki_search`.
+
 ## Dev mode (optional)
 
 While hacking the repo:

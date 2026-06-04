@@ -100,12 +100,32 @@ const summary = {
     playwrightChromiumHint:
       "Run `pnpm exec playwright install chromium` from the repo root if browser flows need Chromium.",
   },
-  dcb: {
-    googleCloudProject:
-      process.env.GOOGLE_CLOUD_PROJECT?.trim() || process.env.GCP_PROJECT?.trim() || null,
-    firebaseProject: process.env.FIREBASE_PROJECT?.trim() || null,
-    cloudRunService: process.env.CLOUD_RUN_SERVICE?.trim() || null,
-  },
+  dcb: (() => {
+    let fromConfig = {};
+    try {
+      const cfgPath = path.join(os.homedir(), ".openclaw", "openclaw.json");
+      const cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
+      const dcb = cfg?.plugins?.entries?.["executive-ops"]?.config?.dcb ?? {};
+      fromConfig = {
+        googleCloudProject: dcb.gcpProjectId?.trim() || null,
+        firebaseProject: dcb.firebaseProjectId?.trim() || null,
+        cloudRunServices: Array.isArray(dcb.cloudRunServices) ? dcb.cloudRunServices : [],
+      };
+    } catch {
+      // ignore
+    }
+    return {
+      googleCloudProject:
+        fromConfig.googleCloudProject ||
+        process.env.GOOGLE_CLOUD_PROJECT?.trim() ||
+        process.env.GCP_PROJECT?.trim() ||
+        null,
+      firebaseProject: fromConfig.firebaseProject || process.env.FIREBASE_PROJECT?.trim() || null,
+      cloudRunService: process.env.CLOUD_RUN_SERVICE?.trim() || null,
+      cloudRunServices: fromConfig.cloudRunServices ?? [],
+      gcloudAuth: fileState(path.join(os.homedir(), ".config", "gcloud", "credentials.db")),
+    };
+  })(),
   policy: {
     githubWrites: "approval_gate_recommended",
     cursorWrites: "approval_gate_recommended",
