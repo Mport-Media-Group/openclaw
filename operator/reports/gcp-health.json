@@ -1,0 +1,175 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-03T04:24:34.808Z",
+  "gcloud": "/Users/NewUser/google-cloud-sdk/bin/gcloud",
+  "config": {
+    "gcpProjectId": "bridgeview-vwsdz",
+    "firebaseProjectId": "bridgeview-vwsdz",
+    "firestoreDatabase": "(default)",
+    "cloudRunServices": [
+      "orchestrator",
+      "orchestrator-staging",
+      "studio",
+      "economics-engine",
+      "hospital-intake",
+      "hl7-router",
+      "fhir-gateway",
+      "iris-adapter",
+      "prior-auth-engine",
+      "pharmacy-engine",
+      "routing-engine",
+      "snf-finder-api",
+      "snf-dispatcher",
+      "cms-geocode",
+      "cms-importer"
+    ]
+  },
+  "envProject": null,
+  "effectiveProject": "bridgeview-vwsdz",
+  "auth": {
+    "accounts": [
+      {
+        "account": "mportmedia@gmail.com",
+        "status": "ACTIVE"
+      }
+    ],
+    "activeAccount": "mportmedia@gmail.com"
+  },
+  "cloudRun": {
+    "region": "us-central1",
+    "services": [
+      {
+        "name": "studio",
+        "url": null,
+        "ready": false,
+        "state": "CONDITION_FAILED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "economics-engine",
+        "url": "https://economics-engine-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "orchestrator-staging",
+        "url": "https://orchestrator-staging-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "orchestrator",
+        "url": "https://orchestrator-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "cms-geocode",
+        "url": "https://cms-geocode-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "hospital-intake",
+        "url": "https://hospital-intake-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "routing-engine",
+        "url": "https://routing-engine-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "snf-finder-api",
+        "url": "https://snf-finder-api-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "cms-importer",
+        "url": "https://cms-importer-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "pharmacy-engine",
+        "url": "https://pharmacy-engine-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "snf-dispatcher",
+        "url": "https://snf-dispatcher-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "prior-auth-engine",
+        "url": "https://prior-auth-engine-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "iris-adapter",
+        "url": "https://iris-adapter-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "fhir-gateway",
+        "url": "https://fhir-gateway-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      },
+      {
+        "name": "hl7-router",
+        "url": "https://hl7-router-ux6gobyjeq-uc.a.run.app",
+        "ready": true,
+        "state": "CONDITION_SUCCEEDED",
+        "source": "run.googleapis.com/v2"
+      }
+    ]
+  },
+  "httpProbes": [
+    {
+      "name": "firebase-hosting-health",
+      "url": "https://bridgeview-vwsdz.web.app/api/health",
+      "critical": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "name": "orchestrator-cloud-run-health",
+      "url": "https://orchestrator-ux6gobyjeq-uc.a.run.app/api/health",
+      "critical": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "name": "studio-apphosting-health",
+      "url": "https://studio--bridgeview-vwsdz.us-central1.hosted.app/api/health",
+      "critical": false,
+      "status": 404,
+      "ok": false
+    }
+  ],
+  "gaps": [
+    "gcloud run CLI broken on Python 3.9 — using Cloud Run REST API fallback. Upgrade gcloud Python (3.10+) when convenient.",
+    "Cloud Run not Ready: studio (may be stale; production health uses bridgeview-vwsdz.web.app)"
+  ]
+}

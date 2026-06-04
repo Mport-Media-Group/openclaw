@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-03T04:24:54.558Z",
+  "machine": {
+    "platform": "darwin",
+    "release": "22.6.0",
+    "uptimeSeconds": 672726,
+    "cpus": 4,
+    "totalMemMiB": 8192,
+    "freeMemMiB": 27,
+    "loadAvg": [
+      45.2,
+      19.54,
+      14.86
+    ],
+    "tmpDir": "/var/folders/yw/6ngtwbt14jq_z2k51vhbzl9r0000gp/T"
+  },
+  "contracts": {
+    "github": {
+      "ghCli": null,
+      "token": "unset"
+    },
+    "cursor": {
+      "cli": null,
+      "acpxConfigHint": "Enable plugins.entries.acpx.enabled for ACP-backed Cursor runs."
+    },
+    "vault": {
+      "provider": "1password",
+      "cli": null,
+      "accountHint": "unset"
+    },
+    "memory": {
+      "provider": "supabase",
+      "projectUrl": "unset",
+      "anonKey": "unset",
+      "serviceRole": "unset"
+    }
+  },
+  "browser": {
+    "profilesRoot": "/Users/NewUser/openclaw/operator/browser-automation/.profiles",
+    "profilesRootState": "missing",
+    "linkedinPolicy": "drafts_only_human_send",
+    "linkedinHealthScript": "present",
+    "canvaHealthScript": "present",
+    "playwrightChromiumHint": "Run `pnpm exec playwright install chromium` from the repo root if browser flows need Chromium."
+  },
+  "dcb": {
+    "googleCloudProject": "bridgeview-vwsdz",
+    "firebaseProject": "bridgeview-vwsdz",
+    "cloudRunService": null,
+    "cloudRunServices": [
+      "orchestrator",
+      "orchestrator-staging",
+      "studio",
+      "economics-engine",
+      "hospital-intake",
+      "hl7-router",
+      "fhir-gateway",
+      "iris-adapter",
+      "prior-auth-engine",
+      "pharmacy-engine",
+      "routing-engine",
+      "snf-finder-api",
+      "snf-dispatcher",
+      "cms-geocode",
+      "cms-importer"
+    ],
+    "gcloudAuth": "present"
+  },
+  "policy": {
+    "githubWrites": "approval_gate_recommended",
+    "cursorWrites": "approval_gate_recommended",
+    "publicPosts": "human_approval_required",
+    "investorMessaging": "human_approval_required",
+    "deployments": "human_approval_required"
+  }
+}

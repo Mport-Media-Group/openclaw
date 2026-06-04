@@ -14,6 +14,9 @@ import path from "node:path";
 
 const SASHA_RACHEL_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
 
+/** macOS afplay only — do not set on gateway config (Discord needs native Opus). */
+const LOCAL_OUTPUT_FORMAT = "mp3_44100_192";
+
 const SASHA_BASE = {
   stability: 0.5,
   similarity_boost: 0.85,
@@ -128,7 +131,7 @@ function resolveProfile(voice, mode) {
 
 async function synthesize({ apiKey, voice, mode, text }) {
   const profile = resolveProfile(voice, mode);
-  const url = `https://api.elevenlabs.io/v1/text-to-speech/${profile.voiceId}?output_format=mp3_44100_128`;
+  const url = `https://api.elevenlabs.io/v1/text-to-speech/${profile.voiceId}?output_format=${LOCAL_OUTPUT_FORMAT}`;
   const response = await fetch(url, {
     method: "POST",
     headers: {

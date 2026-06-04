@@ -1,0 +1,94 @@
+{
+  "$schema": "./targets.schema.json",
+  "version": 1,
+  "lastUpdated": "2026-05-28",
+  "owner": "sasha",
+  "approvalGate": "investorMessaging",
+  "targets": [
+    {
+      "slug": "intersystems",
+      "name": "InterSystems",
+      "type": "strategic-acquirer-ehr-adjacent",
+      "why": "IRIS / FHIR platform — direct interoperability incumbent; partnership or competitive overlap is high.",
+      "newsQuery": "InterSystems IRIS FHIR healthcare",
+      "ticker": null,
+      "secCik": null,
+      "githubOrg": "intersystems"
+    },
+    {
+      "slug": "oracle-health",
+      "name": "Oracle Health",
+      "type": "strategic-acquirer-ehr",
+      "why": "Cerner integration story dominates discharge flow at many systems; M&A signals matter.",
+      "newsQuery": "Oracle Health Cerner",
+      "ticker": "ORCL",
+      "secCik": "0001341439"
+    },
+    {
+      "slug": "epic",
+      "name": "Epic Systems",
+      "type": "ehr-incumbent",
+      "why": "Largest discharge-flow incumbent; App Orchard / interop policy shifts move the market.",
+      "newsQuery": "Epic Systems EHR App Orchard interoperability",
+      "ticker": null,
+      "secCik": null
+    },
+    {
+      "slug": "pointclickcare",
+      "name": "PointClickCare",
+      "type": "snf-ehr",
+      "why": "The other side of the discharge handoff — direct integration partner candidate or acquirer.",
+      "newsQuery": "PointClickCare SNF skilled nursing software",
+      "ticker": null,
+      "secCik": null
+    },
+    {
+      "slug": "innovaccer",
+      "name": "Innovaccer",
+      "type": "healthcare-data-platform",
+      "why": "Comparable interop story; raise rounds + product launches are competitive signal.",
+      "newsQuery": "Innovaccer healthcare data platform",
+      "ticker": null,
+      "secCik": null,
+      "githubOrg": "innovaccer"
+    },
+    {
+      "slug": "wellsky",
+      "name": "WellSky",
+      "type": "post-acute-software",
+      "why": "Strategic acquirer; SNF + home health overlap.",
+      "newsQuery": "WellSky post-acute home health software",
+      "ticker": null,
+      "secCik": null
+    },
+    {
+      "slug": "optum",
+      "name": "Optum (UnitedHealth)",
+      "type": "payer-provider-tech",
+      "why": "Massive scope; any post-acute or interop play is acquisition-relevant.",
+      "newsQuery": "Optum UnitedHealth post-acute interoperability",
+      "ticker": "UNH",
+      "secCik": "0000731766"
+    },
+    {
+      "slug": "nvidia-healthcare",
+      "name": "NVIDIA (Healthcare)",
+      "type": "ai-infrastructure",
+      "why": "Healthcare AI ecosystem moves; GPU + clinical AI tie-ins.",
+      "newsQuery": "NVIDIA healthcare clinical AI",
+      "ticker": "NVDA",
+      "secCik": "0001045810",
+      "githubOrg": "NVIDIA"
+    },
+    {
+      "slug": "google-cloud-healthcare",
+      "name": "Google Cloud (Healthcare)",
+      "type": "cloud-ai-vendor",
+      "why": "DCB runs on GCP; product / partnership announcements directly relevant.",
+      "newsQuery": "Google Cloud healthcare FHIR Vertex AI medical",
+      "ticker": "GOOGL",
+      "secCik": "0001652044",
+      "githubOrg": "GoogleCloudPlatform"
+    }
+  ]
+}

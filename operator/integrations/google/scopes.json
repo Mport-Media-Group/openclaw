@@ -1,0 +1,46 @@
+{
+  "$schema": "./scopes.schema.json",
+  "version": 1,
+  "lastUpdated": "2026-05-28",
+  "owner": "sasha",
+  "v0": {
+    "gmail": [
+      {
+        "scope": "https://www.googleapis.com/auth/gmail.readonly",
+        "purpose": "Read inbox, search, fetch threads"
+      },
+      {
+        "scope": "https://www.googleapis.com/auth/gmail.compose",
+        "purpose": "Create drafts in King's Gmail (drafts only — never sent without explicit `emails` approval)"
+      }
+    ],
+    "calendar": [
+      {
+        "scope": "https://www.googleapis.com/auth/calendar.readonly",
+        "purpose": "Read calendar events"
+      },
+      {
+        "scope": "https://www.googleapis.com/auth/calendar.events",
+        "purpose": "Create tentative events / modify with approval (gated by `emails` class)"
+      }
+    ]
+  },
+  "explicitlyExcludedV0": [
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.send",
+      "reason": "Sasha never sends directly in v0 — only via drafts that King sends. Revisit in v1 with mediated 'approved to send' flow."
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.modify",
+      "reason": "No label changes, no archiving in v0."
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/calendar",
+      "reason": "Full calendar access overkill — request only .events + .readonly."
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/contacts.readonly",
+      "reason": "Contacts enrichment is v1."
+    }
+  ]
+}

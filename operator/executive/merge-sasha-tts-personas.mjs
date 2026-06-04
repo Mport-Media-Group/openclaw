@@ -70,6 +70,11 @@ function main() {
     ...personas,
   };
   config.messages.tts.persona ??= "openclaw-sultry";
+  const elevenlabs = config.messages.tts.providers?.elevenlabs;
+  if (elevenlabs && typeof elevenlabs === "object") {
+    delete elevenlabs.outputFormat;
+    delete elevenlabs.voiceId;
+  }
   ensureSashaAgentTts(config);
   const output = `${JSON.stringify(config, null, 2)}\n`;
   if (dryRun) {
