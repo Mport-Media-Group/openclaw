@@ -220,12 +220,21 @@ describe("channelsStatusCommand SecretRef fallback flow", () => {
 
     await channelsStatusCommand({ channel: "imsg", json: true, probe: true }, runtime as never);
 
-    expect(mocks.callGateway).toHaveBeenCalledWith(
-      expect.objectContaining({
-        method: "channels.status",
-        params: { channel: "imsg", probe: true, timeoutMs: 30000 },
-      }),
-    );
+    expect(mocks.callGateway).toHaveBeenCalledWith({
+      method: "channels.status",
+      params: { channel: "imsg", probe: true, timeoutMs: 30000 },
+      timeoutMs: 30000,
+    });
+  });
+
+  it("rejects malformed timeouts before gateway status requests", async () => {
+    const { runtime } = createCapturingTestRuntime();
+
+    await expect(
+      channelsStatusCommand({ channel: "imsg", timeout: "10s", probe: true }, runtime as never),
+    ).rejects.toThrow('Received: "10s"');
+
+    expect(mocks.callGateway).not.toHaveBeenCalled();
   });
 
   it("keeps read-only fallback output when SecretRefs are unresolved", async () => {

@@ -13,6 +13,9 @@ import {
 } from "./http-utils.js";
 import { authorizeOperatorScopesForMethod } from "./method-scopes.js";
 
+// Generic POST+JSON endpoint wrapper used by gateway HTTP surfaces that share
+// auth, scope, body-size, and method handling but implement their own payload.
+/** Handles a gateway POST JSON endpoint and returns the parsed body when authorized. */
 export async function handleGatewayPostJsonEndpoint(
   req: IncomingMessage,
   res: ServerResponse,
@@ -30,7 +33,7 @@ export async function handleGatewayPostJsonEndpoint(
     ) => string[];
   },
 ): Promise<false | { body: unknown; requestAuth: AuthorizedGatewayHttpRequest } | undefined> {
-  const url = new URL(req.url ?? "/", `http://${req.headers.host || "localhost"}`);
+  const url = new URL(req.url ?? "/", "http://localhost");
   if (url.pathname !== opts.pathname) {
     return false;
   }

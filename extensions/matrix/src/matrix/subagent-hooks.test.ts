@@ -55,7 +55,10 @@ const fakeApi = { config: {} } as never;
 function registerHandlersForTest(config: Record<string, unknown> = {}) {
   return registerHookHandlersForTest<MatrixEntryPluginApi>({
     config,
-    register: registerMatrixSubagentHooks,
+    register: (api) => {
+      registerMatrixSubagentHooks(api);
+      api.on("subagent_spawning", (event) => handleMatrixSubagentSpawning(api, event));
+    },
   });
 }
 
@@ -84,8 +87,6 @@ function makeSpawnEvent(
 }
 
 function requireRecord(value: unknown, label: string): Record<string, unknown> {
-  expect(typeof value).toBe("object");
-  expect(value).not.toBeNull();
   if (typeof value !== "object" || value === null) {
     throw new Error(`${label} was not an object`);
   }

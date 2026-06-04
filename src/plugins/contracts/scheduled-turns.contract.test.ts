@@ -1,3 +1,4 @@
+import { MAX_DATE_TIMESTAMP_MS } from "@openclaw/normalization-core/number-coercion";
 import {
   createPluginRegistryFixture,
   registerTestPlugin,
@@ -131,8 +132,10 @@ function mockCronAdd(response: CronJob) {
 
 function getCronAddBody() {
   const addCall = workflowMocks.cronAdd.mock.calls[0];
-  expect(addCall).toBeDefined();
-  return addCall?.[0] as CronJobCreate;
+  if (!addCall) {
+    throw new Error("Expected cron add call");
+  }
+  return addCall[0] as CronJobCreate;
 }
 
 function expectSessionTurnHandle(
@@ -262,7 +265,8 @@ describe("plugin scheduled turns", () => {
   });
 
   it("builds payloads accepted by the real cron.add protocol validator", async () => {
-    const { validateCronAddParams } = await import("../../gateway/protocol/index.js");
+    const { validateCronAddParams } =
+      await import("../../../packages/gateway-protocol/src/index.js");
     workflowMocks.cronAdd.mockImplementation(async (body: unknown) => {
       expect(validateCronAddParams(body)).toBe(true);
       expect((body as { delivery?: unknown }).delivery).toEqual({
@@ -452,6 +456,14 @@ describe("plugin scheduled turns", () => {
         },
       }),
     ).resolves.toBeUndefined();
+    expect(workflowMocks.cronAdd).not.toHaveBeenCalled();
+  });
+
+  it("rejects delayed schedules that cannot fit in the Date timestamp range", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(MAX_DATE_TIMESTAMP_MS));
+
+    await expect(scheduleWorkflowTurn({ schedule: { delayMs: 1 } })).resolves.toBeUndefined();
     expect(workflowMocks.cronAdd).not.toHaveBeenCalled();
   });
 

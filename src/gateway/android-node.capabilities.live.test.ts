@@ -47,8 +47,9 @@ function asRecord(value: unknown): Record<string, unknown> {
 }
 
 function expectRecord(value: unknown, label: string): Record<string, unknown> {
-  expect(value, label).not.toBeNull();
-  expect(typeof value, label).toBe("object");
+  if (!value || typeof value !== "object") {
+    throw new Error(`expected ${label}`);
+  }
   expect(Array.isArray(value), label).toBe(false);
   return value as Record<string, unknown>;
 }
@@ -59,8 +60,10 @@ function readString(value: unknown): string | null {
 
 function expectNonEmptyString(value: unknown, label: string): string {
   const text = readString(value);
-  expect(text, label).not.toBeNull();
-  return text as string;
+  if (text === null) {
+    throw new Error(`expected ${label}`);
+  }
+  return text;
 }
 
 function readStringArray(value: unknown): string[] {
@@ -215,6 +218,15 @@ const COMMAND_PROFILES: Record<string, CommandProfile> = {
     onSuccess: (payload) => {
       const obj = assertObjectPayload("device.health", payload);
       expectRecord(obj.memory, "device.health memory payload");
+    },
+  },
+  "device.apps": {
+    buildParams: () => ({ query: "calendar", includeSystem: true, limit: 5 }),
+    timeoutMs: 20_000,
+    outcome: "success",
+    onSuccess: (payload) => {
+      const obj = assertObjectPayload("device.apps", payload);
+      expect(Array.isArray(obj.apps)).toBe(true);
     },
   },
   "notifications.list": {

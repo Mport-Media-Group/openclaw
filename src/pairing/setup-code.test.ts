@@ -1,3 +1,4 @@
+// Tests setup code generation and environment-derived defaults.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SecretInput } from "../config/types.secrets.js";
 
@@ -53,6 +54,14 @@ describe("pairing setup code", () => {
     return vi.fn(async () => ({
       code: 0,
       stdout: '{"Self":{"DNSName":"mb-server.tailnet.ts.net."}}',
+      stderr: "",
+    }));
+  }
+
+  function createTailnetIpRunner() {
+    return vi.fn(async () => ({
+      code: 0,
+      stdout: '{"Self":{"TailscaleIPs":["100.64.0.9"]}}',
       stderr: "",
     }));
   }
@@ -551,6 +560,28 @@ describe("pairing setup code", () => {
     });
   });
 
+  it("allows tailnet bind setup urls when gateway TLS is enabled", async () => {
+    await expectResolvedSetupSuccessCase({
+      config: {
+        gateway: {
+          bind: "tailnet",
+          tls: {
+            enabled: true,
+          },
+          auth: { mode: "token", token: "tok_123" },
+        },
+      } satisfies ResolveSetupConfig,
+      options: {
+        networkInterfaces: () => createIpv4NetworkInterfaces("100.64.0.9"),
+      } satisfies ResolveSetupOptions,
+      expected: {
+        authLabel: "token",
+        url: "wss://100.64.0.9:18789",
+        urlSource: "gateway.bind=tailnet",
+      },
+    });
+  });
+
   it.each([
     {
       name: "errors when gateway is loopback only",
@@ -611,6 +642,30 @@ describe("pairing setup code", () => {
       },
     },
     {
+      name: "uses configured Tailscale Service DNS when available",
+      createOptions: () => {
+        const runCommandWithTimeout = createTailnetDnsRunner();
+        return {
+          options: {
+            runCommandWithTimeout,
+          } satisfies ResolveSetupOptions,
+          runCommandWithTimeout,
+          expectedRunCommandCalls: 1,
+        };
+      },
+      config: {
+        gateway: {
+          tailscale: { mode: "serve", serviceName: "svc:openclaw" },
+          auth: { mode: "password", password: "secret" },
+        },
+      } satisfies ResolveSetupConfig,
+      expected: {
+        authLabel: "password",
+        url: "wss://openclaw.tailnet.ts.net",
+        urlSource: "gateway.tailscale.mode=serve",
+      },
+    },
+    {
       name: "prefers gateway.remote.url over tailscale when requested",
       createOptions: () => {
         const runCommandWithTimeout = createTailnetDnsRunner();
@@ -644,6 +699,21 @@ describe("pairing setup code", () => {
       expected,
       runCommandWithTimeout,
       expectedRunCommandCalls,
+    });
+  });
+
+  it("does not advertise a node-IP URL for named Tailscale Services", async () => {
+    await expectResolvedSetupFailureCase({
+      config: {
+        gateway: {
+          tailscale: { mode: "serve", serviceName: "svc:openclaw" },
+          auth: { mode: "password", password: "secret" },
+        },
+      } satisfies ResolveSetupConfig,
+      options: {
+        runCommandWithTimeout: createTailnetIpRunner(),
+      } satisfies ResolveSetupOptions,
+      expectedError: "Service MagicDNS could not be derived",
     });
   });
 });

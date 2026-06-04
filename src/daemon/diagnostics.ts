@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
-import { resolveGatewayLogPaths } from "./restart-logs.js";
+import { resolveGatewayLogPaths, resolveGatewaySupervisorLogPaths } from "./restart-logs.js";
 
+// Error patterns worth surfacing from gateway service logs after failed starts.
 const GATEWAY_LOG_ERROR_PATTERNS = [
   /refusing to bind gateway/i,
   /gateway auth mode/i,
@@ -28,8 +29,12 @@ export async function readLastGatewayErrorLine(
   env: NodeJS.ProcessEnv,
   options?: { platform?: NodeJS.Platform },
 ): Promise<string | null> {
-  const readStderr = (options?.platform ?? process.platform) !== "darwin";
-  const { stdoutPath, stderrPath } = resolveGatewayLogPaths(env);
+  const platform = options?.platform ?? process.platform;
+  const readStderr = platform !== "darwin";
+  const { stdoutPath, stderrPath } =
+    platform === "darwin"
+      ? resolveGatewaySupervisorLogPaths(env, { platform })
+      : resolveGatewayLogPaths(env);
   const stderrRaw = readStderr ? await fs.readFile(stderrPath, "utf8").catch(() => "") : "";
   const stdoutRaw = await fs.readFile(stdoutPath, "utf8").catch(() => "");
   const lines = [...stderrRaw.split(/\r?\n/), ...stdoutRaw.split(/\r?\n/)].map((line) =>

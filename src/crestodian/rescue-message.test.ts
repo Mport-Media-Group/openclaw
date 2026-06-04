@@ -63,6 +63,7 @@ const mockConfig = vi.hoisted(() => {
         return {
           path: state.path,
           previousHash: before.hash ?? null,
+          persistedHash: before.hash ?? null,
           snapshot: before,
           nextConfig: cloneConfig(),
           result: undefined,
@@ -125,6 +126,14 @@ function commandContext(overrides: Partial<CommandContext> = {}): CommandContext
     to: "account:default",
     ...overrides,
   };
+}
+
+function requireFirstMockCall<T>(mock: { mock: { calls: T[][] } }, label: string): T[] {
+  const call = mock.mock.calls[0];
+  if (!call) {
+    throw new Error(`expected ${label} call`);
+  }
+  return call;
 }
 
 async function runRescue(
@@ -230,7 +239,10 @@ describe("Crestodian rescue message", () => {
     ).resolves.toContain("search rows: calendar");
     expect(deps.runPluginsList).toHaveBeenCalledTimes(1);
     expect(deps.runPluginsSearch).toHaveBeenCalledTimes(1);
-    const [searchQuery, searchRuntime] = deps.runPluginsSearch.mock.calls[0] ?? [];
+    const [searchQuery, searchRuntime] = requireFirstMockCall(
+      deps.runPluginsSearch,
+      "plugins search",
+    );
     expect(searchQuery).toBe("calendar");
     expect(searchRuntime).toBeTypeOf("object");
   });
@@ -285,6 +297,52 @@ describe("Crestodian rescue message", () => {
     expect(audit.details?.senderId).toBe("user:owner");
   });
 
+  it("does not queue persistent rescue approval when expiry would exceed the Date range", async () => {
+    const tempDir = await makeStateDir("overflow-expiry-");
+    vi.stubEnv("OPENCLAW_STATE_DIR", tempDir);
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(8_640_000_000_000_000));
+    try {
+      const cfg: OpenClawConfig = { crestodian: { rescue: { enabled: true } } };
+
+      await expect(
+        runRescue("/crestodian restart gateway", cfg, commandContext()),
+      ).resolves.toContain("expiry clock is invalid");
+
+      await expect(fs.readdir(path.join(tempDir, "crestodian", "rescue-pending"))).rejects.toThrow(
+        /ENOENT/,
+      );
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("rejects pending rescue approvals with invalid persisted expiry", async () => {
+    const tempDir = await makeStateDir("invalid-expiry-");
+    vi.stubEnv("OPENCLAW_STATE_DIR", tempDir);
+    const cfg: OpenClawConfig = { crestodian: { rescue: { enabled: true } } };
+    const deps = { runGatewayRestart: vi.fn(async () => {}) };
+
+    await expect(
+      runRescue("/crestodian restart gateway", cfg, commandContext(), deps),
+    ).resolves.toContain("Reply /crestodian yes to apply");
+    const pendingDir = path.join(tempDir, "crestodian", "rescue-pending");
+    const [pendingFile] = await fs.readdir(pendingDir);
+    if (!pendingFile) {
+      throw new Error("expected pending rescue file");
+    }
+    const pendingPath = path.join(pendingDir, pendingFile);
+    const pending = JSON.parse(await fs.readFile(pendingPath, "utf8")) as { expiresAt?: string };
+    pending.expiresAt = "not-a-date";
+    await fs.writeFile(pendingPath, `${JSON.stringify(pending, null, 2)}\n`, "utf8");
+
+    await expect(runRescue("/crestodian yes", cfg, commandContext(), deps)).resolves.toBe(
+      "No pending Crestodian rescue change is waiting for approval.",
+    );
+    expect(deps.runGatewayRestart).not.toHaveBeenCalled();
+    await expect(fs.stat(pendingPath)).rejects.toThrow(/ENOENT/);
+  });
+
   it("queues and applies agent creation through conversational approval", async () => {
     const tempDir = await makeStateDir("agent-");
     vi.stubEnv("OPENCLAW_STATE_DIR", tempDir);
@@ -301,8 +359,10 @@ describe("Crestodian rescue message", () => {
     );
 
     expect(deps.runAgentsAdd).toHaveBeenCalledTimes(1);
-    const [agentParams, agentRuntime, agentOptions] = deps.runAgentsAdd.mock
-      .calls[0] as unknown as [
+    const [agentParams, agentRuntime, agentOptions] = requireFirstMockCall(
+      deps.runAgentsAdd,
+      "agents add",
+    ) as unknown as [
       { name: string; workspace: string; nonInteractive: boolean },
       object,
       { hasFlags: boolean },

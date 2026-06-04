@@ -60,6 +60,15 @@ describe("Zalo reply-once lifecycle", () => {
     });
   }
 
+  function requireRecordInboundSessionArgs() {
+    const [call] = recordInboundSessionMock.mock.calls;
+    if (!call) {
+      throw new Error("expected inbound session record call");
+    }
+    const [recordArgs] = call;
+    return recordArgs;
+  }
+
   it("routes one accepted webhook event to one visible reply across duplicate replay", async () => {
     dispatchReplyWithBufferedBlockDispatcherMock.mockImplementation(
       async ({ dispatcherOptions }) => {
@@ -74,7 +83,9 @@ describe("Zalo reply-once lifecycle", () => {
 
     try {
       await withServer(
-        (req, res) => monitor.route.handler(req, res),
+        (req, res) => {
+          void monitor.route.handler(req, res);
+        },
         async (baseUrl) => {
           const { first, replay } = await postWebhookReplay({
             baseUrl,
@@ -95,7 +106,7 @@ describe("Zalo reply-once lifecycle", () => {
       );
 
       expect(recordInboundSessionMock).toHaveBeenCalledTimes(1);
-      const [recordArgs] = recordInboundSessionMock.mock.calls[0] ?? [];
+      const recordArgs = requireRecordInboundSessionArgs();
       expect(recordArgs?.sessionKey).toBe("agent:main:zalo:direct:dm-chat-1");
       expect(recordArgs?.ctx?.AccountId).toBe("acct-zalo-lifecycle");
       expect(recordArgs?.ctx?.SessionKey).toBe("agent:main:zalo:direct:dm-chat-1");
@@ -136,7 +147,9 @@ describe("Zalo reply-once lifecycle", () => {
 
     try {
       await withServer(
-        (req, res) => monitor.route.handler(req, res),
+        (req, res) => {
+          void monitor.route.handler(req, res);
+        },
         async (baseUrl) => {
           const { first, replay } = await postWebhookReplay({
             baseUrl,

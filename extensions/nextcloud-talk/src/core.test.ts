@@ -33,6 +33,14 @@ async function makeTempDir(): Promise<string> {
   return dir;
 }
 
+function requireFirstTimingSafeEqualCall(mock: ReturnType<typeof vi.fn>): [unknown, unknown] {
+  const [call] = mock.mock.calls;
+  if (!call) {
+    throw new Error("expected timingSafeEqual call");
+  }
+  return call as [unknown, unknown];
+}
+
 describe("nextcloud talk core", () => {
   it("builds an outbound session route for normalized room targets", () => {
     const route = resolveNextcloudTalkOutboundSessionRoute({
@@ -197,17 +205,19 @@ describe("nextcloud talk core", () => {
     });
 
     try {
-      const { generateNextcloudTalkSignature, verifyNextcloudTalkSignature } =
-        await import("./signature.js");
+      const {
+        generateNextcloudTalkSignature: generateNextcloudTalkSignatureLocal,
+        verifyNextcloudTalkSignature: verifyNextcloudTalkSignatureLocal,
+      } = await import("./signature.js");
       const body = JSON.stringify({ hello: "world" });
-      const generated = generateNextcloudTalkSignature({
+      const generated = generateNextcloudTalkSignatureLocal({
         body,
         secret: "secret-123",
       });
       const shortSignature = generated.signature.slice(0, 12);
 
       expect(
-        verifyNextcloudTalkSignature({
+        verifyNextcloudTalkSignatureLocal({
           signature: shortSignature,
           random: generated.random,
           body,
@@ -216,7 +226,7 @@ describe("nextcloud talk core", () => {
       ).toBe(false);
 
       expect(timingSafeEqualMock).toHaveBeenCalledOnce();
-      const [leftBuffer, rightBuffer] = timingSafeEqualMock.mock.calls[0] ?? [];
+      const [leftBuffer, rightBuffer] = requireFirstTimingSafeEqualCall(timingSafeEqualMock);
       expect(Buffer.isBuffer(leftBuffer)).toBe(true);
       expect(Buffer.isBuffer(rightBuffer)).toBe(true);
       if (!Buffer.isBuffer(leftBuffer) || !Buffer.isBuffer(rightBuffer)) {

@@ -5,6 +5,9 @@ import type { ChatAbortControllerEntry } from "./chat-abort.js";
 import type { ChatRunEntry } from "./server-chat.js";
 import type { DedupeEntry } from "./server-shared.js";
 
+// Node event handlers receive a narrowed context instead of the full gateway
+// request context so node-originated events can mutate only the state they own.
+/** Runtime context available to node event handlers. */
 export type NodeEventContext = {
   deps: CliDeps;
   broadcast: (event: string, payload: unknown, opts?: { dropIfSlow?: boolean }) => void;
@@ -30,9 +33,17 @@ export type NodeEventContext = {
     includeSensitive?: boolean;
   }) => Promise<HealthSummary>;
   loadGatewayModelCatalog: () => Promise<ModelCatalogEntry[]>;
+  authorizeNodeSystemRunEvent: (params: {
+    nodeId: string;
+    connId?: string;
+    runId?: string;
+    sessionKey: string;
+    terminal: boolean;
+  }) => boolean;
   logGateway: { warn: (msg: string) => void };
 };
 
+/** Raw event envelope received from connected node clients. */
 export type NodeEvent = {
   event: string;
   payloadJSON?: string | null;

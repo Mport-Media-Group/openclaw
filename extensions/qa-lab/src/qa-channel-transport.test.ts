@@ -110,7 +110,6 @@ describe("qa channel transport", () => {
     const message = await transport.capabilities.readNormalizedMessage({
       messageId: inbound.id,
     });
-    expect(message).toBeTruthy();
     if (!message) {
       throw new Error("expected normalized QA message");
     }
@@ -153,5 +152,13 @@ describe("qa channel transport", () => {
     await expect(transport.capabilities.waitForCondition(async () => "ok", 50, 10)).resolves.toBe(
       "ok",
     );
+  });
+
+  it("keeps oversized wait helper intervals within the timeout", async () => {
+    const transport = createQaChannelTransport(createQaBusState());
+
+    await expect(
+      transport.capabilities.waitForCondition(async () => undefined, 5, Number.MAX_SAFE_INTEGER),
+    ).rejects.toThrow("timed out after 5ms");
   });
 });

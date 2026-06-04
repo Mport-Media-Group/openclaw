@@ -18,6 +18,7 @@ const targets = [
   "qa",
   "security",
   "test",
+  "skills",
   "openclaw.mjs",
   "config/knip.config.ts",
   "tsdown.config.ts",
@@ -32,8 +33,6 @@ const intentionallyUnscannedPrefixes = [".agents/", "vendor/"];
 
 const generatedIgnores = [
   "extensions/qa-matrix/src/shared/**",
-  "extensions/qa-matrix/src/report.ts",
-  "extensions/qa-matrix/src/docker-runtime.ts",
   "extensions/qa-matrix/src/cli-paths.ts",
   "**/node_modules/**",
   "**/dist/**",
