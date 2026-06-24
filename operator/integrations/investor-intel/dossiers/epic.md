@@ -1,7 +1,7 @@
 # Epic Systems
 
 **Type:** ehr-incumbent
-**Last refreshed:** 2026-06-04
+**Last refreshed:** 2026-06-17
 **Why we watch:** Largest discharge-flow incumbent; App Orchard / interop policy shifts move the market.
 
 ## Snapshot
@@ -15,7 +15,7 @@
 
 <!-- fetch.mjs appends entries here; oldest auto-pruned past 30 days -->
 
-- 2026-05-11 — Straits Research — Electronic Health Records (EHR) Market Size, Share & Growth Graph by 2034 - Straits Research — https://news.google.com/rss/articles/CBMidkFVX3lxTE43MU5KdVg4WEVybk1jWDBLdE1BZFFBSlI3NWhWSVpxNEdfdlRWc3M1SmJFOFU4ZDNQbWRDYmJIYWtLR2YteG9Hd0FDNWhJUGNiWDhIVExhank4eUgxX1dkc3NGbWZFakl1TXdCNkZxa2lxSVlfX2c?oc=5
+- 2026-06-03 — Straits Research — Electronic Health Records (EHR) Market Size, Share, Growth, 2034 - Straits Research — https://news.google.com/rss/articles/CBMidkFVX3lxTE43MU5KdVg4WEVybk1jWDBLdE1BZFFBSlI3NWhWSVpxNEdfdlRWc3M1SmJFOFU4ZDNQbWRDYmJIYWtLR2YteG9Hd0FDNWhJUGNiWDhIVExhank4eUgxX1dkc3NGbWZFakl1TXdCNkZxa2lxSVlfX2c?oc=5
 
 ## Strategic posture
 

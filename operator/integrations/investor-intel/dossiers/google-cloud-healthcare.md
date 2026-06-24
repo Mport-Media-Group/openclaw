@@ -1,7 +1,7 @@
 # Google Cloud (Healthcare)
 
 **Type:** cloud-ai-vendor
-**Last refreshed:** 2026-06-04
+**Last refreshed:** 2026-06-17
 **Why we watch:** DCB runs on GCP; product / partnership announcements directly relevant.
 
 ## Snapshot

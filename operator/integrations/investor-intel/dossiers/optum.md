@@ -1,7 +1,7 @@
 # Optum (UnitedHealth)
 
 **Type:** payer-provider-tech
-**Last refreshed:** 2026-06-04
+**Last refreshed:** 2026-06-17
 **Why we watch:** Massive scope; any post-acute or interop play is acquisition-relevant.
 
 ## Snapshot

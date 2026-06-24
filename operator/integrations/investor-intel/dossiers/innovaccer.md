@@ -1,7 +1,7 @@
 # Innovaccer
 
 **Type:** healthcare-data-platform
-**Last refreshed:** 2026-06-04
+**Last refreshed:** 2026-06-17
 **Why we watch:** Comparable interop story; raise rounds + product launches are competitive signal.
 
 ## Snapshot
@@ -15,6 +15,7 @@
 
 <!-- fetch.mjs appends entries here; oldest auto-pruned past 30 days -->
 
+- 2026-06-08 — vocal.media — Leading Data Visualization Companies for Healthcare Analytics - vocal.media — https://news.google.com/rss/articles/CBMioAFBVV95cUxQTVFXMU0wZVAycHF0Um1JVlp4YV82RkZULWhGd3FydFlIdXNFRFpncGEwUUw1QzRzaWp2M1Z2UFZTMENNZDZESlEtNWU5VU1kTEx3a1ZsclNfUkxpYkt2cnIzdTdHTHR2d0lpcTRQckZMUzB1M2VodHJOSXVHeUEydGxTTXMyd0RXbmx6RmZlSWtoV0VyMjlYd29Ndm4ybVRO?oc=5
 - 2026-05-22 — Healthcare IT News — Innovaccer acquires CaduceusHealth with an eye toward autonomous RCM - Healthcare IT News — [M&A] — https://news.google.com/rss/articles/CBMinwFBVV95cUxNdXBXZEpRS3hYSHBhS1p4WFhwTElXeXFFV19odmtMNEZPeENRaVdoNklNOFdiU0IxS1FWZERYZVJIREU1LTNvOGtRdW9Ma0ZFSVQ4U3FGRWxMd1FVeTJ0R1ZVbUNUMGJCQlA1R3kzS2FsWWtENWFVQ0VQWVM3c2EtQVJzVTNTRVJzdi1JNjdkNWV6WUIxdlV6NEJCa0dMd28?oc=5
 - 2026-05-21 — citybiz — Innovaccer Acquires CaduceusHealth to Expand AI-Driven Revenue Cycle Operations - citybiz — [M&A] — https://news.google.com/rss/articles/CBMiugFBVV95cUxPOWN5dzB5RmtnTzFRQmxQWTNJeUVoTjJhamtnUlNzS0VBZnpNdl8za2JDSEQ3MWZlanhyQmpsX1ZFZmthVnZMcGFXd1FEekV4dV80Y2ZVQ2hSaDJPR3FIcWJtWEd5ZUM3Y3Y1ZlZFZ01Da3E0Q2RCOXhad2pPUkJuNXdoMUxpTWxhMG5WZjIzc0Q5TDFVNUp1NGs1WjdjZnowbTNVQ3pCajU1VF9xNHo0QjVYWk9kc3JyVGc?oc=5
 
